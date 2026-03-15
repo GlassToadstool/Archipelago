@@ -188,6 +188,14 @@ class ChapterMenuElement(MenuElement):
                 current_map = next_map
 
     def __str__(self):
+        # Set command to the first not completed map's code, or empty if all maps completed
+        if "No Maps In This Chapter" not in self.first_map.title:
+            current_map = self.first_map
+            while current_map and current_map.completed:
+                current_map = current_map.next_map
+            if current_map:
+                self.command = current_map.command
+        
         string = super().__str__()
         string += self.first_map.get_string(previous_completed="No Maps In This Chapter" not in self.first_map.title)
         return string
