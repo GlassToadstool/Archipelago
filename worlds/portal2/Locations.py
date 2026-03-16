@@ -75,15 +75,15 @@ map_complete_table: dict[str, Portal2LocationData] = {
     # Chapter 6
     "Underground Completion": Portal2LocationData("sp_a3_01", LocationType.MAP_COMPLETION, [portal_gun_2], 6),
     "Cave Johnson Completion": Portal2LocationData("sp_a3_03", LocationType.MAP_COMPLETION, [portal_gun_2], 6),
-    "Repulsion Intro Completion": Portal2LocationData("sp_a3_jump_intro", LocationType.MAP_COMPLETION, [portal_gun_2, paint, old_button, old_floor_button, antique_cube], 6),
-    "Bomb Flings Completion": Portal2LocationData("sp_a3_bomb_flings", LocationType.MAP_COMPLETION, [portal_gun_2, old_button, paint], 6),
-    "Crazy Box Completion": Portal2LocationData("sp_a3_crazy_box", LocationType.MAP_COMPLETION, [portal_gun_2, old_button, paint, antique_cube, old_floor_button], 6),
+    "Repulsion Intro Completion": Portal2LocationData("sp_a3_jump_intro", LocationType.MAP_COMPLETION, [portal_gun_2, blue_gel, old_button, old_floor_button, antique_cube], 6),
+    "Bomb Flings Completion": Portal2LocationData("sp_a3_bomb_flings", LocationType.MAP_COMPLETION, [portal_gun_2, old_button, blue_gel], 6),
+    "Crazy Box Completion": Portal2LocationData("sp_a3_crazy_box", LocationType.MAP_COMPLETION, [portal_gun_2, old_button, blue_gel, antique_cube, old_floor_button], 6),
     "PotatOS Completion": Portal2LocationData("sp_a3_transition01", LocationType.MAP_COMPLETION, [portal_gun_2, potatos], 6),
     # Chapter 7
-    "Propulsion Intro Completion": Portal2LocationData("sp_a3_speed_ramp", LocationType.MAP_COMPLETION, [portal_gun_2, paint, antique_cube, old_floor_button, old_button], 7),
-    "Propulsion Flings Completion": Portal2LocationData("sp_a3_speed_flings", LocationType.MAP_COMPLETION, [portal_gun_2, paint, antique_cube, old_floor_button], 7),
-    "Conversion Intro Completion": Portal2LocationData("sp_a3_portal_intro", LocationType.MAP_COMPLETION, [portal_gun_2, paint], 7),
-    "Three Gels Completion": Portal2LocationData("sp_a3_end", LocationType.MAP_COMPLETION, [portal_gun_2, paint], 7),
+    "Propulsion Intro Completion": Portal2LocationData("sp_a3_speed_ramp", LocationType.MAP_COMPLETION, [portal_gun_2, blue_gel, orange_gel, antique_cube, old_floor_button, old_button], 7),
+    "Propulsion Flings Completion": Portal2LocationData("sp_a3_speed_flings", LocationType.MAP_COMPLETION, [portal_gun_2, blue_gel, orange_gel, antique_cube, old_floor_button], 7),
+    "Conversion Intro Completion": Portal2LocationData("sp_a3_portal_intro", LocationType.MAP_COMPLETION, [portal_gun_2, blue_gel, orange_gel, white_gel], 7),
+    "Three Gels Completion": Portal2LocationData("sp_a3_end", LocationType.MAP_COMPLETION, [portal_gun_2, blue_gel, orange_gel, white_gel], 7),
     # Chapter 8
     "Test Completion": Portal2LocationData("sp_a4_intro", LocationType.MAP_COMPLETION, [portal_gun_2, frankenturret, floor_button, button], 8),
     "Funnel Intro Completion": Portal2LocationData("sp_a4_tb_intro", LocationType.MAP_COMPLETION, [portal_gun_2, funnel, frankenturret, floor_button], 8),
@@ -94,13 +94,13 @@ map_complete_table: dict[str, Portal2LocationData] = {
     "Stop The Box Completion": Portal2LocationData("sp_a4_stop_the_box", LocationType.MAP_COMPLETION, [portal_gun_2, frankenturret, floor_button, button, faith_plate, bridge], 8),
     "Laser Catapult Completion": Portal2LocationData("sp_a4_laser_catapult", LocationType.MAP_COMPLETION, [portal_gun_2, frankenturret, floor_button, faith_plate, reflection_cube, laser, laser_catcher, funnel], 8),
     "Laser Platform Completion": Portal2LocationData("sp_a4_laser_platform", LocationType.MAP_COMPLETION, [portal_gun_2, button, reflection_cube, laser, laser_catcher, funnel], 8),
-    "Propulsion Catch Completion": Portal2LocationData("sp_a4_speed_tb_catch", LocationType.MAP_COMPLETION, [portal_gun_2, floor_button, funnel, button, frankenturret, paint], 8),
-    "Repulsion Polarity Completion": Portal2LocationData("sp_a4_jump_polarity", LocationType.MAP_COMPLETION, [portal_gun_2, paint, funnel, floor_button, button], 8),
+    "Propulsion Catch Completion": Portal2LocationData("sp_a4_speed_tb_catch", LocationType.MAP_COMPLETION, [portal_gun_2, floor_button, funnel, button, frankenturret, orange_gel], 8),
+    "Repulsion Polarity Completion": Portal2LocationData("sp_a4_jump_polarity", LocationType.MAP_COMPLETION, [portal_gun_2, blue_gel, white_gel, funnel, floor_button, button], 8),
     # Chapter 9
-    "Finale 1 Completion": Portal2LocationData("sp_a4_finale1", LocationType.MAP_COMPLETION, [portal_gun_2, faith_plate, funnel, paint], 9),
-    "Finale 2 Completion": Portal2LocationData("sp_a4_finale2", LocationType.MAP_COMPLETION, [portal_gun_2, funnel, paint, floor_button, turrets], 9),
-    "Finale 3 Completion": Portal2LocationData("sp_a4_finale3", LocationType.MAP_COMPLETION, [portal_gun_2, paint, funnel], 9),
-    "Finale 4 Completion": Portal2LocationData("sp_a4_finale4", LocationType.MAP_COMPLETION, [portal_gun_2, potatos, paint, adventure_core, space_core, fact_core], 9),
+    "Finale 1 Completion": Portal2LocationData("sp_a4_finale1", LocationType.MAP_COMPLETION, [portal_gun_2, faith_plate, funnel, white_gel], 9),
+    "Finale 2 Completion": Portal2LocationData("sp_a4_finale2", LocationType.MAP_COMPLETION, [portal_gun_2, funnel, blue_gel, floor_button, turrets], 9),
+    "Finale 3 Completion": Portal2LocationData("sp_a4_finale3", LocationType.MAP_COMPLETION, [portal_gun_2, orange_gel, white_gel, funnel], 9),
+    "Finale 4 Completion": Portal2LocationData("sp_a4_finale4", LocationType.MAP_COMPLETION, [portal_gun_2, potatos, blue_gel, orange_gel, white_gel, adventure_core, space_core, fact_core], 9),
 }
 
 # Optional Checks
@@ -154,8 +154,8 @@ wheatley_monitor_table: dict[str, Portal2LocationData] = {
     "Wheatley Monitor 8": Portal2LocationData("sp_a4_laser_catapult", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, faith_plate, funnel, reflection_cube, laser, laser_catcher]),
     "Wheatley Monitor 9": Portal2LocationData("sp_a4_laser_platform", LocationType.WHEATLY_MONITOR, [portal_gun_2, laser, laser_catcher, reflection_cube, button]),
     "Wheatley Monitor 10": Portal2LocationData("sp_a4_speed_tb_catch", LocationType.WHEATLY_MONITOR, [portal_gun_2]),
-    "Wheatley Monitor 11": Portal2LocationData("sp_a4_jump_polarity", LocationType.WHEATLY_MONITOR, [portal_gun_2, paint, funnel, turrets, floor_button, button]),
-    "Wheatley Monitor 12": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, paint]),
+    "Wheatley Monitor 11": Portal2LocationData("sp_a4_jump_polarity", LocationType.WHEATLY_MONITOR, [portal_gun_2, blue_gel, white_gel, funnel, turrets, floor_button, button]),
+    "Wheatley Monitor 12": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, orange_gel, white_gel]),
 }
 
 wheatley_maps_to_monitor_names: dict[str, str] = {value.map_name: key for key, value in wheatley_monitor_table.items()}
@@ -236,8 +236,8 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Neurotoxin Sabotage Completion": [portal_gun_2],
     "Core Completion": [turrets],
     # Chapter 6
-    "Repulsion Intro Completion": [paint, old_floor_button, portal_gun_2],
-    "Bomb Flings Completion": [portal_gun_2, paint, old_button],
+    "Repulsion Intro Completion": [blue_gel, old_floor_button, portal_gun_2],
+    "Bomb Flings Completion": [portal_gun_2, blue_gel, old_button],
     "Crazy Box Completion": [portal_gun_2, old_floor_button],
     # Chapter 7
     "Propulsion Intro Completion": [portal_gun_2],
@@ -253,7 +253,7 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Laser Catapult Completion": [portal_gun_2],
     "Laser Platform Completion": [portal_gun_2, funnel],
     "Propulsion Catch Completion": [button, frankenturret],
-    "Repulsion Polarity Completion": [turrets, button, paint],
+    "Repulsion Polarity Completion": [turrets, button, blue_gel, white_gel],
     # Chapter 9
     "Finale 1 Completion": [portal_gun_2, frankenturret, faith_plate],
     "Finale 2 Completion": [portal_gun_2],

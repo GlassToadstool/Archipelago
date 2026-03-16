@@ -8,6 +8,11 @@ class ItemTag(Flag):
     WEAPON = auto()
     CUBE = auto()
     GEL = auto()
+
+    BLUE_GEL = auto()
+    ORANGE_GEL = auto()
+    WHITE_GEL = auto()
+    
     CORE = auto()
 
     # Affect applied
@@ -51,7 +56,9 @@ game_item_table: dict[str, Portal2ItemData] = {
 
     # Puzzle Elements
     frankenturret: Portal2ItemData("prop_monster_box", None, ItemTag.ENTITY | ItemTag.DELETE, ItemClassification.progression),
-    paint: Portal2ItemData("info_paint_sprayer", None, ItemTag.ENTITY | ItemTag.GEL | ItemTag.DELETE, ItemClassification.progression),
+    blue_gel: Portal2ItemData("various", "blue", ItemTag.ENTITY | ItemTag.GEL | ItemTag.BLUE_GEL, ItemClassification.progression),
+    orange_gel: Portal2ItemData("various", "orange", ItemTag.ENTITY | ItemTag.GEL | ItemTag.ORANGE_GEL, ItemClassification.progression),
+    white_gel: Portal2ItemData("various", "white", ItemTag.ENTITY | ItemTag.GEL | ItemTag.WHITE_GEL, ItemClassification.progression),
     laser: Portal2ItemData("env_portal_laser", None, ItemTag.ENTITY | ItemTag.DELETE, ItemClassification.progression),
     faith_plate: Portal2ItemData("trigger_catapult", None, ItemTag.ENTITY | ItemTag.DELETE, ItemClassification.progression),
     funnel: Portal2ItemData("prop_tractor_beam", None, ItemTag.ENTITY | ItemTag.DELETE, ItemClassification.progression),

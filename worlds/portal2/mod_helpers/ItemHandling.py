@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from ..Items import *
 from ..ItemNames import motion_blur_trap, fizzle_portal_trap, butter_fingers_trap
+from .Gels import *
 
 # Constants
 DELETE_CUBE = ItemTag.CUBE | ItemTag.DELETE
@@ -41,8 +42,7 @@ def handle_item(item_name: str) -> list[str]:
         else:
             return_commands.append(f'script DeleteEntity("{ent_name}")')
     
-    if ItemTag.GEL in item_tags:
-        return_commands.append("removeallpaint")
+    # No longer handle gel removal generically, now under map specific commands
     
     if ItemTag.WEAPON in item_tags:
         if item_name == portal_gun_1: # Removed Item for improved randomized levels (too many levels rely on this)
@@ -53,10 +53,6 @@ def handle_item(item_name: str) -> list[str]:
     if DISABLE_PICKUP in item_tags:
         return_commands.append(f'script DisableEntityPickup("{ent_name}")')
         return_commands.append(f'script AttachHologramToEntity("{ent_name}", null, 0.66, 20, 2)')
-    
-    if ItemTag.ALTER in item_tags:
-        if item_name == "Fizzler": # Also removed as it would lock down most of the game, could be a trap though
-            return_commands.append(f'script CreateMurderFizzlers()')
 
     if ItemTag.CORE in item_tags:
         core_name = item_data.variant
@@ -132,6 +128,17 @@ map_specific_commands: list[MapCommand] = [
     MapCommand("sp_a4_finale2", turrets, ['script ppmod.addscript([Vector(11835, 11776, 8543), 1, "trigger_once"], "OnStartTouch", "DisableEntityPhysics(\"npc_portal_turret_floor\")", 2.5, 1)\n']),
 ]
 
+# map specific gel removal commands
+for map, gels in map_gel_table.items():
+    if map == "sp_a3_jump_intro":
+        map_specific_commands.append(MapCommand(map, blue_gel, ['removeallpaint\n']))
+    
+    if map == "sp_a3_portal_intro":
+        map_specific_commands.append(MapCommand(map, orange_gel, ['removeallpaint\n']))
+    
+    for gel_data in gels:
+        map_specific_commands.append(MapCommand(map, gel_data.gel_item, [f'script RemoveGel({gel_data.x}, {gel_data.y}, {gel_data.z}, "{gel_data.object_type}", "{gel_data.object_name}")\n']))
+                
 def potatos_not_inplace():
     global map_specific_commands
     map_specific_commands.append(MapCommand("sp_a3_transition01", potatos, ["script RemovePotatOS()\n"]))
