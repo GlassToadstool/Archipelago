@@ -165,6 +165,8 @@ map_gel_table: dict[str, list[GelData]] = {
         GelData(object_name="paint_blue_event_sphere4", object_type="paint_sphere", x=-288.0, y=192.0, z=32.0, gel_item=blue_gel),
         GelData(object_name="paint_blue_event_sphere5", object_type="paint_sphere", x=240.0, y=144.0, z=24.0, gel_item=blue_gel),
         GelData(object_name="paint_blue_sprayer", object_type="info_paint_sprayer", x=-544.0, y=-16.0, z=320.0, gel_item=blue_gel),
+        
+        # Cannot removed last 2 blobs from finale4 at the moment
         GelData(object_name="pipe_bounce_paint_bomb_template1", object_type="point_template", x=-576.0, y=256.0, z=320.0, gel_item=blue_gel), # Doesn't work
         # Above handles these two
         # GelData(object_name="pipe_bounce_paint_bomb1", object_type="prop_paint_bomb", x=-544.0, y=256.0, z=352.0, gel_item=blue_gel),
@@ -174,6 +176,7 @@ map_gel_table: dict[str, list[GelData]] = {
         GelData(object_name="paint_speed_bomb_maker", object_type="point_template", x=616.0, y=-368.0, z=336.0, gel_item=orange_gel), # Doesn't work
         # Above handles this one
         # GelData(object_name="paint_speed_bomb", object_type="prop_paint_bomb", x=616.0, y=-368.0, z=368.0, gel_item=orange_gel),
+        
         GelData(object_name="paint_white_ending_sphere", object_type="paint_sphere", x=0.0, y=256.0, z=8.0, gel_item=white_gel),
     ],
     "sp_a4_jump_polarity": [
