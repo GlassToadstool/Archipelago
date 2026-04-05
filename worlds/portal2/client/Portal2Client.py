@@ -8,6 +8,7 @@ import typing
 from CommonClient import CommonContext, server_loop, ClientCommandProcessor, logger, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
 from Utils import async_start, init_logging
+from DeathMessages import get_death_message
 
 from ..mod_helpers.ItemHandling import add_ratman_commands, handle_item, handle_map_start, handle_trap, portal_gun_upgrade_not_inplace, potatos_not_inplace
 from ..mod_helpers.MapMenu import Menu
@@ -249,7 +250,9 @@ class Portal2Context(CommonContext):
         # Deathlink
         elif message.startswith("send_deathlink"):
             if self.death_link_active and time.time() - self.last_death_link > 10:
-                await self.send_death()
+                map_name = message.split(" ")[1]
+                death_message = get_death_message(map_name, self.player_names[self.slot])
+                await self.send_death(death_text=death_message)
 
     async def handle_goal_completion(self):
         if self.finished_game:
