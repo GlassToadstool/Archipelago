@@ -173,7 +173,7 @@ ratman_den_locations_table: dict[str, Portal2LocationData] = {
     "Ratman Den 2": Portal2LocationData("sp_a2_dual_lasers", LocationType.OTHER),
     "Ratman Den 3": Portal2LocationData("sp_a2_trust_fling", LocationType.OTHER, [portal_gun_2, faith_plate]),
     "Ratman Den 4": Portal2LocationData("sp_a2_bridge_intro", LocationType.OTHER),
-    "Ratman Den 5": Portal2LocationData("sp_a2_bridge_the_gap", LocationType.OTHER, [portal_gun_2]),
+    "Ratman Den 5": Portal2LocationData("sp_a2_bridge_the_gap", LocationType.OTHER, [portal_gun_2, bridge]),
     "Ratman Den 6": Portal2LocationData("sp_a2_laser_vs_turret", LocationType.OTHER, [portal_gun_2, laser, floor_button, reflection_cube]),
     "Ratman Den 7": Portal2LocationData("sp_a2_pull_the_rug", LocationType.OTHER, [portal_gun_2, bridge])
 }
