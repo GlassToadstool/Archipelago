@@ -12,7 +12,7 @@ from Utils import async_start, init_logging
 from ..mod_helpers.ItemHandling import add_ratman_commands, handle_item, handle_map_start, handle_trap, portal_gun_upgrade_not_inplace, potatos_not_inplace
 from ..mod_helpers.MapMenu import Menu
 from .DeathMessages import get_death_message
-from ..Locations import location_names_to_map_codes, map_codes_to_location_names, wheatley_maps_to_monitor_names, all_locations_table, wheatley_monitor_table
+from ..Locations import location_names_to_map_codes, map_codes_to_location_names, wheatley_maps_to_monitor_names, all_locations_table, wheatley_monitor_table, ratman_den_locations_table
 from .. import Portal2World
 from ..Options import GameModeOption
 
@@ -212,7 +212,7 @@ class Portal2Context(CommonContext):
             # append the whole command string
             command_string = self.create_level_begin_command()
             self.command_queue.append(command_string)
-            self.command_queue += handle_map_start(map_name, self.item_list, self.get_wheatley_monitor_names(self.checked_locations))
+            self.command_queue += handle_map_start(map_name, self.item_list, self.get_wheatley_monitor_names(self.checked_locations), self.get_ratman_den_names(self.checked_locations))
 
         # For map complete checks
         elif message.startswith("map_complete:"):
@@ -300,6 +300,15 @@ class Portal2Context(CommonContext):
             if location_name in wheatley_monitor_table:
                 monitors_checked.append(location_name)
         return monitors_checked
+    
+    def get_ratman_den_names(self, location_ids: list[int]) -> list[str]:
+        '''Convert location ids to the names of the ratman den checks if they are ones'''
+        dens_checked = []
+        for loc in location_ids:
+            location_name = self.location_names.lookup_in_game(loc)
+            if location_name in ratman_den_locations_table:
+                dens_checked.append(location_name)
+        return dens_checked
 
     def handle_slot_data(self, slot_data: dict):
         if "death_link" in slot_data:

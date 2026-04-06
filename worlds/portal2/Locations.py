@@ -14,6 +14,7 @@ class LocationType(Flag):
     ITEM = auto()
     ACHIEVEMENT = auto()
     WHEATLY_MONITOR = auto()
+    RATMAN_DEN = auto()
     OTHER = auto()
 
 class Portal2LocationData:
@@ -171,13 +172,13 @@ item_location_table: dict[str, Portal2LocationData] = {
 item_maps_to_item_location : dict[str, str] = {value.map_name:key for key, value in item_location_table.items()}
 
 ratman_den_locations_table: dict[str, Portal2LocationData] = {
-    "Ratman Den 1": Portal2LocationData("sp_a1_intro4", LocationType.OTHER, [weighted_cube, floor_button]),
-    "Ratman Den 2": Portal2LocationData("sp_a2_dual_lasers", LocationType.OTHER),
-    "Ratman Den 3": Portal2LocationData("sp_a2_trust_fling", LocationType.OTHER, [portal_gun_2, faith_plate]),
-    "Ratman Den 4": Portal2LocationData("sp_a2_bridge_intro", LocationType.OTHER),
-    "Ratman Den 5": Portal2LocationData("sp_a2_bridge_the_gap", LocationType.OTHER, [portal_gun_2, bridge]),
-    "Ratman Den 6": Portal2LocationData("sp_a2_laser_vs_turret", LocationType.OTHER, [portal_gun_2, laser, floor_button, reflection_cube]),
-    "Ratman Den 7": Portal2LocationData("sp_a2_pull_the_rug", LocationType.OTHER, [portal_gun_2, bridge])
+    "Ratman Den 1": Portal2LocationData("sp_a1_intro4", LocationType.RATMAN_DEN, [weighted_cube, floor_button]),
+    "Ratman Den 2": Portal2LocationData("sp_a2_dual_lasers", LocationType.RATMAN_DEN),
+    "Ratman Den 3": Portal2LocationData("sp_a2_trust_fling", LocationType.RATMAN_DEN, [portal_gun_2, faith_plate]),
+    "Ratman Den 4": Portal2LocationData("sp_a2_bridge_intro", LocationType.RATMAN_DEN),
+    "Ratman Den 5": Portal2LocationData("sp_a2_bridge_the_gap", LocationType.RATMAN_DEN, [portal_gun_2, bridge]),
+    "Ratman Den 6": Portal2LocationData("sp_a2_laser_vs_turret", LocationType.RATMAN_DEN, [portal_gun_2, laser, floor_button, reflection_cube]),
+    "Ratman Den 7": Portal2LocationData("sp_a2_pull_the_rug", LocationType.RATMAN_DEN, [portal_gun_2, bridge])
 }
 
 ratman_map_to_ratman_den: dict[str, str] = {value.map_name: key for key, value in ratman_den_locations_table.items()}

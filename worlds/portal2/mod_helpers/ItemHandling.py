@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from ..Items import *
 from ..ItemNames import motion_blur_trap, fizzle_portal_trap, butter_fingers_trap
 from .Gels import *
-from ..Locations import wheatley_monitor_table
+from ..Locations import wheatley_monitor_table, LocationType
 
 # Constants
 DELETE_CUBE = ItemTag.CUBE | ItemTag.DELETE
@@ -98,7 +98,7 @@ maps_with_potatos = ["sp_a3_speed_ramp",
                      "sp_a4_finale3",
                      "sp_a4_finale4"]
 
-def handle_map_start(map_code: str, items_missing: list[str], wheatley_monitors_checked: list[str]) -> list[str]:
+def handle_map_start(map_code: str, items_missing: list[str], wheatley_monitors_checked: list[str], ratman_dens_checked: list[str]) -> list[str]:
     commands: list[str] = []
     
     if map_code in maps_with_potatos and potatos in items_missing:
@@ -106,7 +106,12 @@ def handle_map_start(map_code: str, items_missing: list[str], wheatley_monitors_
     
     for mc in map_specific_commands:
         if map_code == mc.map_code and (mc.condition_item == None or mc.condition_item in items_missing):
-            commands += mc.commands
+            # For ratman den commands, check if pressed
+            if mc.type == LocationType.RATMAN_DEN and any(den in mc.commands[0] for den in ratman_dens_checked):
+                replacement_command = mc.commands[0].replace(")\n", ", 1)\n")
+                commands.append(replacement_command)
+            else:
+                commands += mc.commands
     
     # Mark wheatley monitors that have already been checked
     map_names = [wheatley_monitor_table[monitor].map_name for monitor in wheatley_monitors_checked]
@@ -121,6 +126,7 @@ class MapCommand:
     map_code: str
     condition_item: str
     commands: list[str]
+    type: LocationType | None = None
     
 map_specific_commands: list[MapCommand] = [
     MapCommand("sp_a4_finale4", potatos, ["script BlockWheatleyFight()\n"]),
@@ -155,13 +161,13 @@ def portal_gun_upgrade_not_inplace():
 
 # Option based commands
 ratman_den_commands: list[MapCommand] = [
-    MapCommand("sp_a1_intro4", None, ['script CreateAPButton("Ratman Den 1", Vector(847, -703, 320-65), Vector(0,-90,0), 0.8)\n']),
-    MapCommand("sp_a2_dual_lasers", None, ['script CreateAPButton("Ratman Den 2", Vector(438, -636, 827-65), Vector(0,135,0), 0.8)\n']),
-    MapCommand("sp_a2_trust_fling", None, ['script CreateAPButton("Ratman Den 3", Vector(2045, 82, 254-65), Vector(0,-135,0), 0.8)\n']),
-    MapCommand("sp_a2_bridge_intro", None, ['script CreateAPButton("Ratman Den 4", Vector(612, -618, 64-65), Vector(0,-135,0), 0.8)\n']),
-    MapCommand("sp_a2_bridge_the_gap", None, ['script CreateAPButton("Ratman Den 5", Vector(-128, -270, 1756-65), Vector(0,90,0), 0.8)\n']),
-    MapCommand("sp_a2_laser_vs_turret", None, ['script CreateAPButton("Ratman Den 6", Vector(850, -720, 222-65), Vector(0,180,0), 0.8)\n']),
-    MapCommand("sp_a2_pull_the_rug", None, ['script CreateAPButton("Ratman Den 7", Vector(63, -1158, 550-65), Vector(0,45,0), 0.8)\n'])
+    MapCommand("sp_a1_intro4", None, ['script CreateAPButton("Ratman Den 1", Vector(847, -703, 320-65), Vector(0,-90,0), 0.8)\n'], LocationType.RATMAN_DEN),
+    MapCommand("sp_a2_dual_lasers", None, ['script CreateAPButton("Ratman Den 2", Vector(438, -636, 827-65), Vector(0,135,0), 0.8)\n'], LocationType.RATMAN_DEN),
+    MapCommand("sp_a2_trust_fling", None, ['script CreateAPButton("Ratman Den 3", Vector(2045, 82, 254-65), Vector(0,-135,0), 0.8)\n'], LocationType.RATMAN_DEN),
+    MapCommand("sp_a2_bridge_intro", None, ['script CreateAPButton("Ratman Den 4", Vector(612, -618, 64-65), Vector(0,-135,0), 0.8)\n'], LocationType.RATMAN_DEN),
+    MapCommand("sp_a2_bridge_the_gap", None, ['script CreateAPButton("Ratman Den 5", Vector(-128, -270, 1756-65), Vector(0,90,0), 0.8)\n'], LocationType.RATMAN_DEN),
+    MapCommand("sp_a2_laser_vs_turret", None, ['script CreateAPButton("Ratman Den 6", Vector(850, -720, 222-65), Vector(0,180,0), 0.8)\n'], LocationType.RATMAN_DEN),
+    MapCommand("sp_a2_pull_the_rug", None, ['script CreateAPButton("Ratman Den 7", Vector(63, -1158, 550-65), Vector(0,45,0), 0.8)\n'], LocationType.RATMAN_DEN)
 ]
 
 def add_ratman_commands():
