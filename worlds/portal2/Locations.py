@@ -158,6 +158,8 @@ wheatley_monitor_table: dict[str, Portal2LocationData] = {
     "Wheatley Monitor 12": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, orange_gel, white_gel]),
 }
 
+# Note: these are the names used in game to identify the monitors
+# most are just the map name but some have a number after due to multiple monitors in the same map
 wheatley_maps_to_monitor_names: dict[str, str] = {value.map_name: key for key, value in wheatley_monitor_table.items()}
 
 item_location_table: dict[str, Portal2LocationData] = {

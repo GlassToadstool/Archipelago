@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from ..Items import *
 from ..ItemNames import motion_blur_trap, fizzle_portal_trap, butter_fingers_trap
 from .Gels import *
+from ..Locations import wheatley_monitor_table
 
 # Constants
 DELETE_CUBE = ItemTag.CUBE | ItemTag.DELETE
@@ -97,7 +98,7 @@ maps_with_potatos = ["sp_a3_speed_ramp",
                      "sp_a4_finale3",
                      "sp_a4_finale4"]
 
-def handle_map_start(map_code: str, items_missing: list[str]) -> list[str]:
+def handle_map_start(map_code: str, items_missing: list[str], wheatley_monitors_checked: list[str]) -> list[str]:
     commands: list[str] = []
     
     if map_code in maps_with_potatos and potatos in items_missing:
@@ -106,7 +107,12 @@ def handle_map_start(map_code: str, items_missing: list[str]) -> list[str]:
     for mc in map_specific_commands:
         if map_code == mc.map_code and (mc.condition_item == None or mc.condition_item in items_missing):
             commands += mc.commands
-        
+    
+    # Mark wheatley monitors that have already been checked
+    map_names = [wheatley_monitor_table[monitor].map_name for monitor in wheatley_monitors_checked]
+    commands.append(f'script SetCheckedScreens(["{'", "'.join(map_names)}"])\n')
+    commands += ["script AddWheatleyMonitorBreakCheck()\n"]
+    
     return commands
 
 
