@@ -127,6 +127,12 @@ class RatmanDens(Toggle):
     Determines whether locating Ratman Dens will send location checks
     """
     display_name = "Ratman Dens"
+    
+class VitrifiedDoors(Toggle):
+    """
+    Determines whether locating Vitrified Doors will send location checks
+    """
+    display_name = "Vitrified Doors"
 
 portal2_option_groups = [
     OptionGroup("Location Options", [
@@ -137,6 +143,7 @@ portal2_option_groups = [
         CutsceneLevels,
         WheatleyMonitors,
         RatmanDens,
+        VitrifiedDoors
     ]),
     OptionGroup("Trap Options", [
         TrapFillPercentage,
@@ -169,6 +176,7 @@ class Portal2Options(PerGameCommonOptions):
     # storyachievementsanity: StoryAchievementSanity
     wheatley_monitors: WheatleyMonitors
     ratman_dens: RatmanDens
+    vitrified_doors: VitrifiedDoors
 
     trap_fill_percentage: TrapFillPercentage
     motion_blur_trap_weight: MotionBlurTrapWeight

@@ -226,21 +226,22 @@ class Portal2Context(CommonContext):
                 self.update_menu(map_id)
         
         # All other checks
+        # Item checks e.g. portal gun upgrade, potatos
         elif message.startswith("item_collected:"):
             item_collected = message.split(":", 1)[1]
             check_id = all_locations_table[item_collected].id
             await self.check_locations([check_id])
             self.update_menu(check_id)
-            
+        
+        # Wheatley monitor checks
         elif message.startswith("monitor_break:"):
             map_name = message.split(":", 1)[1]
             check_name = wheatley_maps_to_monitor_names[map_name]
-                
             check_id = all_locations_table[check_name].id
             await self.check_locations([check_id])
             self.update_menu(check_id)
         
-        # Custom buttons e.g. ratman dens
+        # Custom buttons e.g. ratman dens, vitrified doors
         elif message.startswith("button_check:"):
             check_name = message.split(":", 1)[1]
             check_id = all_locations_table[check_name].id
@@ -340,6 +341,10 @@ class Portal2Context(CommonContext):
             if slot_data["ratman_dens"]:
                 add_ratman_commands()
                 self.menu.has_ratman_dens = True
+                
+        if "vitrified_doors" in slot_data:
+            if slot_data["vitrified_doors"]:
+                self.menu.has_vitrified_doors = True
         
         # Don't remove the portal gun upgrade after pickup
         if "portal_gun_upgrade_inplace" not in slot_data:

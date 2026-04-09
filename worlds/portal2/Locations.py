@@ -183,8 +183,23 @@ ratman_den_locations_table: dict[str, Portal2LocationData] = {
 
 ratman_map_to_ratman_den: dict[str, str] = {value.map_name: key for key, value in ratman_den_locations_table.items()}
 
+vitrified_door_locations_table: dict[str, Portal2LocationData] = {
+    "Vitrified Door 1": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 2": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 3": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 4": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 5": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 6": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
+}
+
+vitrified_map_to_vitrified_door: dict[str, list[str]] = {
+    "sp_a3_03": ["Vitrified Door 1", "Vitrified Door 2", "Vitrified Door 3"],
+    "sp_a3_transition01": ["Vitrified Door 4", "Vitrified Door 5", "Vitrified Door 6"]
+}
+
 all_locations_table: dict[str, Portal2LocationData] = map_complete_table.copy()
 all_locations_table.update(cutscene_completion_table)
+all_locations_table.update(vitrified_door_locations_table)
 
 location_names_to_map_codes: dict[str, str] = {name: value.map_name for
                                                name, value in all_locations_table.items()}
@@ -266,7 +281,7 @@ speedrun_logic_table: dict[str, list[str]] = {
 sub_locations_in_maps: dict[str, list[str]] = {
     "Portal Gun Completion": [portal_gun_1],
     "Incinerator Completion": [portal_gun_2],
-    "PotatOS Completion": [potatos],
+    "PotatOS Completion": [potatos, "Vitrified Door 4", "Vitrified Door 5", "Vitrified Door 6"],
     "Funnel Intro Completion": ["Wheatley Monitor 1"],
     "Ceiling Button Completion": ["Wheatley Monitor 2"],
     "Wall Button Completion": ["Wheatley Monitor 3"],
@@ -284,5 +299,6 @@ sub_locations_in_maps: dict[str, list[str]] = {
     "Bridge Intro Completion": ["Ratman Den 4"],
     "Bridge the Gap Completion": ["Ratman Den 5"],
     "Laser Vs. Turret Completion": ["Ratman Den 6"],
-    "Pull The Rug Completion": ["Ratman Den 7"]
+    "Pull The Rug Completion": ["Ratman Den 7"],
+    "Cave Johnson Completion": ["Vitrified Door 1", "Vitrified Door 2", "Vitrified Door 3"],
 }
