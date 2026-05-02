@@ -32,7 +32,6 @@ class AdditionalChecksMenuTests(Portal2TestBase):
         menu = Menu(slot_data["chapter_dict"], self.client, is_open_world=slot_data["game_mode"] == GameModeOption.OPEN_WORLD, logic_difficulty=slot_data["logic_difficulty"], wheatley_monitors=slot_data["wheatley_monitors"], ratman_dens=slot_data["ratman_dens"], vitrified_doors=slot_data["vitrified_doors"])
         menu.generate_menu()
         menu_string = str(menu)
-        print(menu_string)
         # Find map that includes Wheatley Monitors in the title and check it is correct
         self.assertTrue(f"{indicator_characters["map"]}{indicator_characters["wheatley"]}{indicator_characters["wheatley"]}" in menu_string)
         self.assertTrue(f"{indicator_characters["map"]}{indicator_characters["wheatley"]}" in menu_string)
