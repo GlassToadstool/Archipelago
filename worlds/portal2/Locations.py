@@ -199,7 +199,6 @@ vitrified_map_to_vitrified_door: dict[str, list[str]] = {
 
 all_locations_table: dict[str, Portal2LocationData] = map_complete_table.copy()
 all_locations_table.update(cutscene_completion_table)
-all_locations_table.update(vitrified_door_locations_table)
 
 location_names_to_map_codes: dict[str, str] = {name: value.map_name for
                                                name, value in all_locations_table.items()}
@@ -209,6 +208,7 @@ map_codes_to_location_names: dict[str, str] = {value: key for key, value in loca
 all_locations_table.update(wheatley_monitor_table)
 all_locations_table.update(item_location_table)
 all_locations_table.update(ratman_den_locations_table)
+all_locations_table.update(vitrified_door_locations_table)
 # all_locations_table.update(achievements_table)
 
 location_groups: dict[str, set[str]] = {
