@@ -355,7 +355,7 @@ class Portal2Context(CommonContext):
             potatos_not_inplace()
         
         self.menu.generate_menu()
-        # self.refresh_menu()
+        self.refresh_menu()
 
     def on_package(self, cmd, args):
         def update_item_list():

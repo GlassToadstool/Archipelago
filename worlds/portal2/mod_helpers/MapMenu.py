@@ -50,6 +50,10 @@ indicator_characters: dict[str, str] = {
     potatos: "ù",
 }
 
+access_icons: dict[str, str] = {
+    "playable": "═ ",
+    "unplayable": "║ ",
+}
 
 def items_to_shortened(items_list: list[str]) -> list[str]:
     return map(lambda x: items_shortened[x], items_list)
@@ -99,13 +103,15 @@ class MapMenuElement(MenuElement):
         self.info_text = indicator_characters["map"] + parse_sub_locations(self.sub_location_completion)
 
     def refresh_title(self, blocked: bool = False):
-        if blocked:
-            self.title = "~" + self.title + "~"
-            return
-
         self.info_text = indicator_characters["completed"] if self.completed else indicator_characters["map"]
         self.info_text += parse_sub_locations(self.sub_location_completion)
-        self.title = self.title.strip("~")
+
+        if blocked:
+            if access_icons["unplayable"] not in self.title:
+                self.title = access_icons["unplayable"] + self.title
+        elif access_icons["playable"] not in self.title:
+            self.title = self.title.strip(access_icons["unplayable"])
+            self.title = access_icons["playable"] + self.title
 
     def get_string(self, previous_completed: bool):
         # Update required items
@@ -117,12 +123,14 @@ class MapMenuElement(MenuElement):
         text = super().__str__()
         if not (self.parent.parent.is_open_world or previous_completed):
             self.refresh_title(blocked=True)
-            text = super().__str__()
             text = text.replace("command", "command_deactivated")
-        if self.next_map:
-            return text + self.next_map.get_string(self.completed)
         else:
-            return text
+            self.refresh_title()
+        
+        if self.next_map:
+            text = text + self.next_map.get_string(self.completed)
+        
+        return text
 
     def complete_map(self, map_id: int) -> bool:
         if self.location_id == map_id:
@@ -152,6 +160,7 @@ class MapMenuElement(MenuElement):
             if "Complete" not in location_name:
                 self.complete_sub_location_check(location_name)
 
+blank_map_element = lambda parent, chapter_number: MapMenuElement(parent, chapter_number, 0, "No Maps In This Chapter", "", -1, [], "")
 
 def get_sub_locations(
     location_name: str, has_wheatley_monitors: bool, has_ratman_dens: bool, has_vitrified_doors: bool
