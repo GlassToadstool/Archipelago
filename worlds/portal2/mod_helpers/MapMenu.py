@@ -117,6 +117,7 @@ class MapMenuElement(MenuElement):
         text = super().__str__()
         if not (self.parent.parent.is_open_world or previous_completed):
             self.refresh_title(blocked=True)
+            text = super().__str__()
             text = text.replace("command", "command_deactivated")
         if self.next_map:
             return text + self.next_map.get_string(self.completed)
@@ -188,12 +189,11 @@ class ChapterMenuElement(MenuElement):
     first_map: MapMenuElement = None
 
     def __init__(self, parent, chapter_number: int, map_names: list[str]):
-        super().__init__(
-            parent,
-            f"chapter{chapter_number}",
-            f"Chapter {chapter_number}",
-            pic=f"vgui/chapters/chapter{chapter_number}",
-        )
+        super().__init__(parent, f"chapter{chapter_number}", f"Chapter {chapter_number}", pic=f"vgui/chapters/chapter{chapter_number}")
+        if not map_names:
+            self.first_map = blank_map_element(self, chapter_number)
+            return
+
         current_map: MapMenuElement = None
         for i, name in enumerate(map_names):
             location = all_locations_table[name]
@@ -208,16 +208,29 @@ class ChapterMenuElement(MenuElement):
                 current_map = next_map
 
     def __str__(self):
-        return super().__str__() + self.first_map.get_string(True)
-
+        # Set command to the first not completed map's code, or empty if all maps completed
+        if "No Maps In This Chapter" not in self.first_map.title:
+            current_map = self.first_map
+            while current_map and current_map.completed:
+                current_map = current_map.next_map
+            if current_map:
+                self.command = current_map.command
+        
+        string = super().__str__()
+        string += self.first_map.get_string(previous_completed="No Maps In This Chapter" not in self.first_map.title)
+        return string
+    
     def complete_map(self, map_id: int):
-        self.first_map.complete_map(map_id)
-
+        if self.first_map:
+            self.first_map.complete_map(map_id)
+        
     def complete_sub_location_check(self, sub_location: str):
-        self.first_map.complete_sub_location_check(sub_location)
-
+        if self.first_map:
+            self.first_map.complete_sub_location_check(sub_location)
+        
     def complete_check(self, location_id: int):
-        self.first_map.complete_check(location_id)
+        if self.first_map:
+            self.first_map.complete_check(location_id)
 
 
 class Menu:
