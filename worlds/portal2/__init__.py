@@ -172,6 +172,9 @@ class Portal2World(World):
                 elif self.options.ratman_dens and sub_location in ratman_den_locations_table:
                     ratman_requirements = ratman_den_locations_table[sub_location].required_items
                     self.create_in_level_check(sub_location, ratman_requirements, region_start)
+                elif self.options.vitrified_doors and sub_location in vitrified_door_locations_table:
+                    vitrified_requirements = vitrified_door_locations_table[sub_location].required_items
+                    self.create_in_level_check(sub_location, vitrified_requirements, region_start)
             
             # Connect to chapter region if there was no previous level or if open world
             if self.options.game_mode == GameModeOption.OPEN_WORLD or last_region == None:

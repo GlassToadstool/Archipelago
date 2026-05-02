@@ -11,7 +11,8 @@ from Utils import async_start, init_logging
 
 from ..mod_helpers.ItemHandling import add_ratman_commands, handle_item, handle_map_start, handle_trap, portal_gun_upgrade_not_inplace, potatos_not_inplace
 from ..mod_helpers.MapMenu import Menu
-from ..Locations import location_names_to_map_codes, map_codes_to_location_names, wheatley_maps_to_monitor_names, all_locations_table
+from .DeathMessages import get_death_message
+from ..Locations import location_names_to_map_codes, map_codes_to_location_names, wheatley_maps_to_monitor_names, all_locations_table, wheatley_monitor_table, ratman_den_locations_table
 from .. import Portal2World
 from ..Options import GameModeOption
 
@@ -211,7 +212,7 @@ class Portal2Context(CommonContext):
             # append the whole command string
             command_string = self.create_level_begin_command()
             self.command_queue.append(command_string)
-            self.command_queue += handle_map_start(map_name, self.item_list)
+            self.command_queue += handle_map_start(map_name, self.item_list, self.get_wheatley_monitor_names(self.checked_locations), self.get_ratman_den_names(self.checked_locations))
 
         # For map complete checks
         elif message.startswith("map_complete:"):
@@ -225,21 +226,22 @@ class Portal2Context(CommonContext):
                 self.update_menu(map_id)
         
         # All other checks
+        # Item checks e.g. portal gun upgrade, potatos
         elif message.startswith("item_collected:"):
             item_collected = message.split(":", 1)[1]
             check_id = all_locations_table[item_collected].id
             await self.check_locations([check_id])
             self.update_menu(check_id)
-            
+        
+        # Wheatley monitor checks
         elif message.startswith("monitor_break:"):
             map_name = message.split(":", 1)[1]
             check_name = wheatley_maps_to_monitor_names[map_name]
-                
             check_id = all_locations_table[check_name].id
             await self.check_locations([check_id])
             self.update_menu(check_id)
         
-        # Custom buttons e.g. ratman dens
+        # Custom buttons e.g. ratman dens, vitrified doors
         elif message.startswith("button_check:"):
             check_name = message.split(":", 1)[1]
             check_id = all_locations_table[check_name].id
@@ -249,7 +251,9 @@ class Portal2Context(CommonContext):
         # Deathlink
         elif message.startswith("send_deathlink"):
             if self.death_link_active and time.time() - self.last_death_link > 10:
-                await self.send_death()
+                map_name = message.split(" ")[1]
+                death_message = get_death_message(map_name, self.player_names[self.slot])
+                await self.send_death(death_text=death_message)
 
     async def handle_goal_completion(self):
         if self.finished_game:
@@ -289,6 +293,24 @@ class Portal2Context(CommonContext):
             return None
         return self.location_name_to_id[location_name]
     
+    def get_wheatley_monitor_names(self, location_ids: list[int]) -> list[str]:
+        '''Convert location ids to the names of the wheatley monitor checks if they are ones'''
+        monitors_checked = []
+        for loc in location_ids:
+            location_name = self.location_names.lookup_in_game(loc)
+            if location_name in wheatley_monitor_table:
+                monitors_checked.append(location_name)
+        return monitors_checked
+    
+    def get_ratman_den_names(self, location_ids: list[int]) -> list[str]:
+        '''Convert location ids to the names of the ratman den checks if they are ones'''
+        dens_checked = []
+        for loc in location_ids:
+            location_name = self.location_names.lookup_in_game(loc)
+            if location_name in ratman_den_locations_table:
+                dens_checked.append(location_name)
+        return dens_checked
+
     def handle_slot_data(self, slot_data: dict):
         if "death_link" in slot_data:
             self.death_link_active = slot_data["death_link"]
@@ -319,6 +341,10 @@ class Portal2Context(CommonContext):
             if slot_data["ratman_dens"]:
                 add_ratman_commands()
                 self.menu.has_ratman_dens = True
+                
+        if "vitrified_doors" in slot_data:
+            if slot_data["vitrified_doors"]:
+                self.menu.has_vitrified_doors = True
         
         # Don't remove the portal gun upgrade after pickup
         if "portal_gun_upgrade_inplace" not in slot_data:
@@ -329,7 +355,7 @@ class Portal2Context(CommonContext):
             potatos_not_inplace()
         
         self.menu.generate_menu()
-        # self.refresh_menu()
+        self.refresh_menu()
 
     def on_package(self, cmd, args):
         def update_item_list():
@@ -394,7 +420,7 @@ class Portal2Context(CommonContext):
                 temp_commands += item_commands
 
         self.item_remove_commands = temp_commands
-
+        
     def make_gui(self):
         from kvui import GameManager
 
