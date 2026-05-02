@@ -293,7 +293,7 @@ sub_locations_in_maps: dict[str, list[str]] = {
     "Propulsion Catch Completion": ["Wheatley Monitor 10"],
     "Repulsion Polarity Completion": ["Wheatley Monitor 11"],
     "Finale 3 Completion": ["Wheatley Monitor 12"],
-    "Laser Stairs Completion": ["Ratman Den 1"],
+    "Smooth Jazz Completion": ["Ratman Den 1"],
     "Dual Lasers Completion": ["Ratman Den 2"],
     "Trust Fling Completion": ["Ratman Den 3"],
     "Bridge Intro Completion": ["Ratman Den 4"],
