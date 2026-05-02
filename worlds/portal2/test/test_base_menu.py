@@ -32,7 +32,6 @@ class BaseMenuTests(Portal2TestBase):
         menu.generate_menu()
         # Check menu is generated where the first map of each chapter says "command" and the rest say "command_deactivated"
         menu_string = str(menu)
-        print(menu_string)
         self.assertGreater(menu_string.count('"command_deactivated"'), 0)
         self.assertEqual(menu_string.count('"command"'), 18)
     
@@ -40,6 +39,5 @@ class BaseMenuTests(Portal2TestBase):
         menu = Menu({1: [], 2: [], 3: []}, self.client)
         menu.generate_menu()
         menu_string = str(menu)
-        print(menu_string)
         # Check menu is generated where the first map of each chapter says "No Maps In This Chapter"
         self.assertEqual(menu_string.count("No Maps In This Chapter"), 3)
