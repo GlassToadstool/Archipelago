@@ -46,7 +46,7 @@ game_item_table: dict[str, Portal2ItemData] = {
     weighted_cube: Portal2ItemData("prop_weighted_cube", "models/props/metal_box.mdl", ItemTag.DELETE | ItemTag.CUBE, ItemClassification.progression),
     reflection_cube: Portal2ItemData("prop_weighted_cube", "models/props/reflection_cube.mdl", ItemTag.DELETE | ItemTag.CUBE, ItemClassification.progression),
     spherical_cube: Portal2ItemData("prop_weighted_cube", "models/props_gameplay/mp_ball.mdl", ItemTag.DELETE | ItemTag.CUBE, ItemClassification.filler),
-    antique_cube: Portal2ItemData("prop_weighted_cube", "models/props_underground_underground_weighted_cube.mdl", ItemTag.DELETE | ItemTag.CUBE, ItemClassification.progression),
+    antique_cube: Portal2ItemData("prop_weighted_cube", "models/props_underground_weighted_cube.mdl", ItemTag.DELETE | ItemTag.CUBE, ItemClassification.progression),
 
     # Buttons
     button: Portal2ItemData("prop_button", None, ItemTag.ENTITY | ItemTag.DELETE, ItemClassification.progression),
