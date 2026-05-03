@@ -292,10 +292,10 @@ class Portal2World(World):
             "chapter_dict": {int(name[-1]): values for name, values in self.chapter_maps_dict.items()}
         })
         # Check if portal gun items are in their locations
-        if self.multiworld.find_item(portal_gun_2, self.player).name == portal_gun_2:
+        if portal_gun_2 not in self.options.start_inventory_from_pool and self.multiworld.find_item(portal_gun_2, self.player).name == portal_gun_2:
             slot_data["portal_gun_upgrade_inplace"] = True
 
-        if self.multiworld.find_item(potatos, self.player).name == potatos:
+        if potatos not in self.options.start_inventory_from_pool and self.multiworld.find_item(potatos, self.player).name == potatos:
             slot_data["potatos_inplace"] = True
             
         return slot_data
