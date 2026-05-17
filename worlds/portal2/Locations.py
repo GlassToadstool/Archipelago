@@ -247,7 +247,7 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Column Blocker Completion": [portal_gun_2],
     "Laser Chaining Completion": [reflection_cube, laser, laser_relays],
     "Triple Laser Completion": [reflection_cube, portal_gun_2],
-    "Jailbreak Completion": [portal_gun_2, button],
+    "Jailbreak Completion": [portal_gun_2, button, weighted_cube],
     "Escape Completion": [],
     # Chapter 5
     "Turret Sabotage Completion": [portal_gun_2],
