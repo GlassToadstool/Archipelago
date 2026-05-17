@@ -247,7 +247,7 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Column Blocker Completion": [portal_gun_2],
     "Laser Chaining Completion": [reflection_cube, laser, laser_relays],
     "Triple Laser Completion": [reflection_cube, portal_gun_2],
-    "Jailbreak Completion": [portal_gun_2, button],
+    "Jailbreak Completion": [portal_gun_2, button, weighted_cube],
     "Escape Completion": [],
     # Chapter 5
     "Turret Sabotage Completion": [portal_gun_2],
@@ -261,6 +261,7 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Propulsion Intro Completion": [portal_gun_2],
     "Propulsion Flings Completion": [portal_gun_2, antique_cube],
     "Conversion Intro Completion": [portal_gun_2],
+    "Three Gels Completion": [portal_gun_2, blue_gel],
     # Chapter 8
     "Funnel Intro Completion": [floor_button, funnel],
     "Ceiling Button Completion": [floor_button, frankenturret, button, portal_gun_2],
@@ -271,11 +272,12 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Laser Catapult Completion": [portal_gun_2],
     "Laser Platform Completion": [portal_gun_2, funnel],
     "Propulsion Catch Completion": [button, frankenturret],
-    "Repulsion Polarity Completion": [turrets, button, blue_gel, white_gel],
+    "Repulsion Polarity Completion": [turrets, button, blue_gel],
     # Chapter 9
     "Finale 1 Completion": [portal_gun_2, frankenturret, faith_plate],
     "Finale 2 Completion": [portal_gun_2],
     "Finale 3 Completion": [portal_gun_2, funnel],
+    "Finale 4 Completion": [portal_gun_2, potatos, blue_gel, white_gel, adventure_core, space_core, fact_core],
 }
 
 sub_locations_in_maps: dict[str, list[str]] = {
