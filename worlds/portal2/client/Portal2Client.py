@@ -5,7 +5,14 @@ import sys
 import time
 import typing
 
-from CommonClient import CommonContext, server_loop, ClientCommandProcessor, logger, gui_enabled
+tracker_loaded = False
+try:
+    from worlds.tracker.TrackerClient import TrackerGameContext as CommonContext, TrackerCommandProcessor as ClientCommandProcessor
+    tracker_loaded = True
+except ModuleNotFoundError:
+    from CommonClient import CommonContext, ClientCommandProcessor
+
+from CommonClient import server_loop, logger, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
 from Utils import async_start, init_logging
 
@@ -73,6 +80,7 @@ class Portal2Context(CommonContext):
     game_command_sender_task: typing.Optional["asyncio.Task[None]"] = None
     game_message_listener_task: typing.Optional["asyncio.Task[None]"] = None
     game = "Portal 2"
+    tags = {"AP"}
     items_handling = 0b111  # receive all items for /received
 
     HOST = "localhost"
@@ -358,6 +366,7 @@ class Portal2Context(CommonContext):
         self.refresh_menu()
 
     def on_package(self, cmd, args):
+        super().on_package(cmd, args)
         def update_item_list():
             # Update item list to only include items not collected
             items_received_names = [self.item_names.lookup_in_game(i.item, self.game) for i in self.items_received]
@@ -422,15 +431,11 @@ class Portal2Context(CommonContext):
         self.item_remove_commands = temp_commands
         
     def make_gui(self):
-        from kvui import GameManager
+        ui = super().make_gui()
+        ui.base_title = "Portal 2 Text Client"
+        ui.icon = r"worlds/portal2/data/Portalpelago.png"
 
-        class Portal2TextManager(GameManager):
-            base_title = "Portal 2 Text Client"
-            def __init__(self, ctx):
-                super().__init__(ctx)
-                self.icon = r"worlds/portal2/data/Portalpelago.png"
-
-        return Portal2TextManager
+        return ui
     
     async def shutdown(self):
         self.server_address = ""
@@ -467,6 +472,8 @@ async def main(args: Namespace):
     ctx.game_command_sender_task = asyncio.create_task(ctx.p2_command_sender(), name="sender loop")
     ctx.game_message_listener_task = asyncio.create_task(ctx.p2_message_listener(), name="listener loop")
 
+    if tracker_loaded:
+        ctx.run_generator()
     if gui_enabled:
         ctx.run_gui()
     ctx.run_cli()
