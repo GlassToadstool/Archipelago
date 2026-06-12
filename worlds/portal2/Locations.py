@@ -260,7 +260,7 @@ speedrun_logic_table: dict[str, list[str]] = {
     "Crazy Box Completion": [portal_gun_2, old_floor_button],
     # Chapter 7
     "Propulsion Intro Completion": [portal_gun_2],
-    "Propulsion Flings Completion": [portal_gun_2],
+    "Propulsion Flings Completion": [portal_gun_2, blue_gel],
     "Conversion Intro Completion": [portal_gun_2],
     "Three Gels Completion": [portal_gun_2, blue_gel],
     # Chapter 8
