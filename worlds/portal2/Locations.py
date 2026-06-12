@@ -266,7 +266,7 @@ speedrun_logic_table: dict[str, list[str]] = {
     # Chapter 8
     "Funnel Intro Completion": [floor_button, funnel],
     "Ceiling Button Completion": [floor_button, frankenturret, button, portal_gun_2],
-    "Wall Button Completion": [floor_button, frankenturret, button, portal_gun_2],
+    "Wall Button Completion": [floor_button, funnel, portal_gun_2],
     "Polarity Completion": [portal_gun_2, funnel],
     "Funnel Catch Completion": [portal_gun_2],
     "Stop The Box Completion": [floor_button, portal_gun_2],
