@@ -241,6 +241,8 @@ class Portal2Context(CommonContext):
 
             data = await asyncio.wait_for(reader.read(1000), timeout=0.5)
             pong = data.decode(errors="ignore").replace("\'", "").split('\r\n')
+            writer.close()
+            await writer.wait_closed()
             if pong and pong[0] == "Pong":
                 return True
             return False
