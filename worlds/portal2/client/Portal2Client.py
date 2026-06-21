@@ -143,7 +143,6 @@ class Portal2Context(CommonContext):
                         self.game_message_queue += data_list
 
                 except asyncio.CancelledError:
-                    logger.info("Game listener closed from cancellation")
                     raise
                 except Exception as e:
                     logger.error(f"An error occurred in listener loop: {e}")
@@ -190,7 +189,6 @@ class Portal2Context(CommonContext):
                             # yield control briefly so other tasks (listener, etc.) run smoothly
                             await asyncio.sleep(0.1)
                 except asyncio.CancelledError:
-                    logger.info("Game sender closed from cancellation")
                     raise
                 except Exception as e:
                     logger.error(f"An error occurred in sender loop: {e}")
