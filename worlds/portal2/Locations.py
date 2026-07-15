@@ -156,7 +156,7 @@ wheatley_monitor_table: dict[str, Portal2LocationData] = {
     "Wheatley Monitor 9": Portal2LocationData("sp_a4_laser_platform", LocationType.WHEATLY_MONITOR, [portal_gun_2, laser, laser_catcher, reflection_cube, button]),
     "Wheatley Monitor 10": Portal2LocationData("sp_a4_speed_tb_catch", LocationType.WHEATLY_MONITOR, [portal_gun_2]),
     "Wheatley Monitor 11": Portal2LocationData("sp_a4_jump_polarity", LocationType.WHEATLY_MONITOR, [portal_gun_2, blue_gel, white_gel, funnel, turrets, floor_button, button]),
-    "Wheatley Monitor 12": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, orange_gel, white_gel]),
+    "Wheatley Monitor 12": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, white_gel]),
 }
 
 # Note: these are the names used in game to identify the monitors
