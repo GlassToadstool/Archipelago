@@ -5,12 +5,7 @@ import sys
 import time
 import typing
 
-tracker_loaded = False
-try:
-    from worlds.tracker.TrackerClient import TrackerGameContext as CommonContext, TrackerCommandProcessor as ClientCommandProcessor
-    tracker_loaded = True
-except ModuleNotFoundError:
-    from CommonClient import CommonContext, ClientCommandProcessor
+from .P2Context import P2CommonContext as CommonContext, P2ClientCommandProcessor as ClientCommandProcessor, tracker_loaded
 
 from CommonClient import server_loop, logger, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
