@@ -131,6 +131,17 @@ class MapMenuElement(MenuElement):
             text = text + self.next_map.get_string(self.completed)
         
         return text
+    
+    def get_chapter_info(self):
+        info = {
+            "completed": self.completed,
+            "sub_locations": self.sub_location_completion,
+            "required_items": [item for item in self.required_items if item in self.parent.parent.client.item_list],
+            "location_id": self.location_id,
+            "title": self.title[2:],
+            "command": self.command
+        }
+        return info
 
     def complete_map(self, map_id: int) -> bool:
         if self.location_id == map_id:
@@ -240,9 +251,22 @@ class ChapterMenuElement(MenuElement):
     def complete_check(self, location_id: int):
         if self.first_map:
             self.first_map.complete_check(location_id)
+            
+    def get_chapter_info(self):
+        maps = []
+        current_map = self.first_map
+        while current_map:
+            maps.append(current_map.get_chapter_info())
+            current_map = current_map.next_map
+            
+        info = {
+            "chapter_name": self.title,
+            "maps": maps
+        }
+        return info
 
 
-class Menu:
+class GameMapMenu:
     chapters: list[ChapterMenuElement] = []
 
     def __init__(
@@ -284,3 +308,10 @@ class Menu:
     def complete_check(self, location_id: int):
         for chapter in self.chapters:
             chapter.complete_check(location_id)
+            
+    def get_menu_info(self) -> dict[str, dict]:
+        menu_info = {}
+        for chapter in self.chapters:
+            chapter_info = chapter.get_chapter_info()
+            menu_info[chapter_info["chapter_name"]] = chapter_info["maps"]
+        return menu_info

@@ -5,14 +5,14 @@ import sys
 import time
 import typing
 
-from .P2Context import P2CommonContext as CommonContext, P2ClientCommandProcessor as ClientCommandProcessor, tracker_loaded
+from .P2Context import MenuLayout, P2CommonContext as CommonContext, P2ClientCommandProcessor as ClientCommandProcessor, tracker_loaded, HOST, PORT, send_instant_command
 
 from CommonClient import server_loop, logger, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
 from Utils import async_start, init_logging
 
 from ..mod_helpers.ItemHandling import add_ratman_commands, handle_item, handle_map_start, handle_trap, portal_gun_upgrade_not_inplace, potatos_not_inplace
-from ..mod_helpers.MapMenu import Menu
+from ..mod_helpers.MapMenu import GameMapMenu
 from .DeathMessages import get_death_message
 from ..Locations import location_names_to_map_codes, map_codes_to_location_names, wheatley_maps_to_monitor_names, all_locations_table, wheatley_monitor_table, ratman_den_locations_table
 from .. import Portal2World
@@ -31,7 +31,7 @@ class Portal2CommandProcessor(ClientCommandProcessor):
 
     def _cmd_command(self, *command):
         """Sends a command to the game. Should not be used unless you get softlocked"""
-        self.ctx.command_queue.append(' '.join(command) + "\n")
+        async_start(send_instant_command(' '.join(command)), "send_command")
 
     def _cmd_deathlink(self):
         """Toggles death link for this client"""
@@ -85,9 +85,6 @@ class Portal2Context(CommonContext):
     tags = {"AP"}
     items_handling = 0b111  # receive all items for /received
 
-    HOST = "localhost"
-    PORT = int(Portal2World.settings.default_portal2_port)
-
     death_link_active = False
     goal_map_code = ""
 
@@ -101,7 +98,8 @@ class Portal2Context(CommonContext):
 
     location_name_to_id: dict[str, int] = None
 
-    menu: Menu = None
+    game_map_menu: GameMapMenu = None
+    client_map_menu: MenuLayout = None
 
     def alert_game_connection(self):
         if self.check_game_connection():
@@ -116,14 +114,16 @@ class Portal2Context(CommonContext):
     def update_menu(self, location_id: int = None):
         menu_file = Portal2World.settings.menu_file
         if location_id is not None:
-            self.menu.complete_check(location_id)
+            self.game_map_menu.complete_check(location_id)
         # Write the menu to that file
         with open(menu_file, "w", encoding='utf-8') as f:
-            f.write(str(self.menu))
+            f.write(str(self.game_map_menu))
+            
+        self.client_map_menu.update_menu(self.game_map_menu.get_menu_info())
 
     def refresh_menu(self):
         for location_id in self.checked_locations:
-            self.menu.complete_check(location_id)
+            self.game_map_menu.complete_check(location_id)
         self.update_menu()
 
     def add_to_in_game_message_queue(self, message: str, color_string: str = None) -> None:
@@ -134,7 +134,7 @@ class Portal2Context(CommonContext):
         try:
             while True:
                 try:
-                    reader, writer = await asyncio.open_connection(self.HOST, self.PORT)
+                    reader, writer = await asyncio.open_connection(HOST, PORT)
                 except ConnectionRefusedError:
                     self.listener_active = False
                     await asyncio.sleep(self.current_reconnect_delay)
@@ -173,7 +173,7 @@ class Portal2Context(CommonContext):
         try:
             while True:
                 try:
-                    _, writer = await asyncio.open_connection(self.HOST, self.PORT)
+                    _, writer = await asyncio.open_connection(HOST, PORT)
                 except ConnectionRefusedError:
                     self.sender_active = False
                     await asyncio.sleep(self.current_reconnect_delay)
@@ -227,7 +227,7 @@ class Portal2Context(CommonContext):
 
     async def is_player_in_map(self):
         try:
-            reader, writer = await asyncio.open_connection(self.HOST, self.PORT)
+            reader, writer = await asyncio.open_connection(HOST, PORT)
             ping = 'script printl("Pong")\n'
             writer.write(ping.encode())
             await writer.drain()
@@ -360,27 +360,28 @@ class Portal2Context(CommonContext):
 
         if "chapter_dict" in slot_data:
             if "logic_difficulty" in slot_data:
-                self.menu = Menu(slot_data["chapter_dict"], self, logic_difficulty=slot_data["logic_difficulty"])
+                self.game_map_menu = GameMapMenu(slot_data["chapter_dict"], self, logic_difficulty=slot_data["logic_difficulty"])                
             else:
-                self.menu = Menu(slot_data["chapter_dict"], self)
+                self.game_map_menu = GameMapMenu(slot_data["chapter_dict"], self)
+                
         else:
             raise Exception("chapter_dict not found in slot data")
         
         if "game_mode" in slot_data:
-            self.menu.is_open_world = slot_data["game_mode"] == GameModeOption.OPEN_WORLD
+            self.game_map_menu.is_open_world = slot_data["game_mode"] == GameModeOption.OPEN_WORLD
             
         if "wheatley_monitors" in slot_data:
             if slot_data["wheatley_monitors"]:
-                self.menu.has_wheatley_monitors = True
+                self.game_map_menu.has_wheatley_monitors = True
             
         if "ratman_dens" in slot_data:
             if slot_data["ratman_dens"]:
                 add_ratman_commands()
-                self.menu.has_ratman_dens = True
+                self.game_map_menu.has_ratman_dens = True
                 
         if "vitrified_doors" in slot_data:
             if slot_data["vitrified_doors"]:
-                self.menu.has_vitrified_doors = True
+                self.game_map_menu.has_vitrified_doors = True
         
         # Don't remove the portal gun upgrade after pickup
         if "portal_gun_upgrade_inplace" not in slot_data:
@@ -390,8 +391,10 @@ class Portal2Context(CommonContext):
         if "potatos_inplace" not in slot_data:
             potatos_not_inplace()
         
-        self.menu.generate_menu()
+        self.game_map_menu.generate_menu()
+        self.client_map_menu = self.get_menu()
         self.refresh_menu()
+        self.client_map_menu.build()
 
     def on_package(self, cmd, args):
         super().on_package(cmd, args)
@@ -461,7 +464,7 @@ class Portal2Context(CommonContext):
     def make_gui(self):
         from kvui import GameManager
         ui = super().make_gui()
-        ui.base_title = "Portal 2 Text Client"
+        ui.base_title = "Portal 2 Client"
         ui.icon = r"worlds/portal2/data/Portalpelago.png"
 
         return ui
