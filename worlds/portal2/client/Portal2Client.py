@@ -368,7 +368,9 @@ class Portal2Context(CommonContext):
             raise Exception("chapter_dict not found in slot data")
         
         if "game_mode" in slot_data:
-            self.game_map_menu.is_open_world = slot_data["game_mode"] == GameModeOption.OPEN_WORLD
+            if slot_data["game_mode"] == GameModeOption.OPEN_WORLD:
+                self.game_map_menu.is_open_world = True
+                self.get_menu().set_open_world()
             
         if "wheatley_monitors" in slot_data:
             if slot_data["wheatley_monitors"]:

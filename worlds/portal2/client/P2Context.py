@@ -101,6 +101,7 @@ class MenuLayout(MDGridLayout):
         self.current_chapter = None
         self.map_area = None
         self.map_info = None
+        self.is_open_world = False
 
     def update_menu(self, menu_data: dict[str, dict]):
         """
@@ -112,6 +113,9 @@ class MenuLayout(MDGridLayout):
         selected_chapter = self.current_chapter or list(self.menu_info.keys())[0]
         if self.map_area is not None:
             self.select_chapter(selected_chapter)
+            
+    def set_open_world(self):
+        self.is_open_world = True
 
     def build(self):
         """
@@ -174,7 +178,8 @@ class MenuLayout(MDGridLayout):
             )
             self.map_area.layout.add_widget(map_button)
             map["disabled"] = disable_map
-            disable_map = not map["completed"]
+            if not self.is_open_world:
+                disable_map = not map["completed"]
 
     def select_map(self, map_name: str):
         """
