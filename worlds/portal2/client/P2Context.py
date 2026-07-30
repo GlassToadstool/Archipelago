@@ -15,7 +15,7 @@ from Utils import async_start
 from kvui import GameManager, ScrollBox
 from kivy.metrics import dp
 from kivymd.uix.gridlayout import MDGridLayout
-from kivymd.uix.button import MDButton, MDButtonText
+from kivymd.uix.button import MDButton, MDButtonText, MDIconButton
 from kivymd.uix.label import MDLabel
 
 from .. import Portal2World
@@ -76,7 +76,7 @@ class MapInfo(MDGridLayout):
         else:
             self.play_map_button = MDButton(
                     MDButtonText(text="Play Map"),
-                    on_release=lambda btn: self.select_map()
+                    on_release=lambda btn: self.play_map()
                 )
                     
         
@@ -85,7 +85,7 @@ class MapInfo(MDGridLayout):
         self.add_widget(self.play_map_button)
         
         
-    def select_map(self):
+    def play_map(self):
         """
         Send map command to the game to load the selected map
         """
@@ -96,12 +96,13 @@ class MapInfo(MDGridLayout):
 class MenuLayout(MDGridLayout):
 
     def __init__(self):
-        super().__init__(rows=1, cols=3)
+        super().__init__(rows=1, cols=3, padding=[40, 10])
         self.menu_info = []
         self.current_chapter = None
         self.map_area = None
         self.map_info = None
         self.is_open_world = False
+        self.return_to_menu = False
 
     def update_menu(self, menu_data: dict[str, dict]):
         """
@@ -127,7 +128,7 @@ class MenuLayout(MDGridLayout):
             raise Exception("Menu data not set. Call update_menu() once before build().")
 
         self.clear_widgets()
-        self.chapter_area = MDGridLayout(rows=9, cols=1)
+        self.chapter_area = MDGridLayout(rows=10, cols=1)
         self.map_area = ScrollBox()
         self.map_area.layout.orientation = "vertical"
         self.map_area.layout.spacing = dp(3)
@@ -141,9 +142,17 @@ class MenuLayout(MDGridLayout):
                 MDButtonText(text=chapter_name),
                 on_release=lambda btn, chapter=chapter_name: self.select_chapter(
                     chapter
-                ),
+                )
             )
             self.chapter_area.add_widget(chapter_button)
+        
+        menu_toggle_box = MDGridLayout(cols=2, row_default_height=40, row_force_default=True, padding=10)
+        self.auto_next_map_button = MDIconButton(icon = "checkbox-blank-outline", on_release=self.toggle_switch)
+        button_label = MDLabel(text="Return to menu on map finish: ")
+        menu_toggle_box.add_widget(button_label)
+        menu_toggle_box.add_widget(self.auto_next_map_button)
+        self.chapter_area.add_widget(menu_toggle_box)
+        
 
     def select_chapter(self, chapter_name: str):
         """
@@ -199,9 +208,19 @@ class MenuLayout(MDGridLayout):
         
         self.map_info = MapInfo(map_data)
         self.add_widget(self.map_info)
+        
+    def toggle_switch(self, instance):
+        self.return_to_menu = not self.return_to_menu
+        if self.return_to_menu:
+            self.auto_next_map_button.icon = "checkbox-outline"
+        else:
+            self.auto_next_map_button.icon = "checkbox-blank-outline"
+        
+        logger.info(self.return_to_menu)
 
 
 class P2GameManager(GameManager):
+    
     def build(self):
         container = super().build()
 

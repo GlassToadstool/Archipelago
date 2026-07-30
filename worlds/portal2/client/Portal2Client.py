@@ -113,13 +113,15 @@ class Portal2Context(CommonContext):
     
     def update_menu(self, location_id: int = None):
         menu_file = Portal2World.settings.menu_file
+        check_completed = False
         if location_id is not None:
-            self.game_map_menu.complete_check(location_id)
+            check_completed = self.game_map_menu.complete_check(location_id)
         # Write the menu to that file
         with open(menu_file, "w", encoding='utf-8') as f:
             f.write(str(self.game_map_menu))
             
         self.client_map_menu.update_menu(self.game_map_menu.get_menu_info())
+        return check_completed
 
     def refresh_menu(self):
         for location_id in self.checked_locations:
@@ -239,6 +241,8 @@ class Portal2Context(CommonContext):
             if pong and pong[0] == "Pong":
                 return True
             return False
+        except asyncio.CancelledError:
+            raise
         except:
             return False
 
@@ -253,13 +257,21 @@ class Portal2Context(CommonContext):
         # For map complete checks
         elif message.startswith("map_complete:"):
             done_map = message.split(':', 1)[1]
-            if done_map == self.goal_map_code:
-                await self.handle_goal_completion()
             
             map_id = self.map_code_to_location_id(done_map)
             if map_id:
                 await self.check_locations([map_id])
-                self.update_menu(map_id)
+                next_map = self.update_menu(map_id)
+                
+                if done_map == self.goal_map_code:
+                    await self.handle_goal_completion()
+                else:
+                    logger.info(self.client_map_menu.return_to_menu)
+                    logger.info(next_map)
+                    if not self.client_map_menu.return_to_menu and type(next_map) == str:
+                        await send_instant_command(f"changelevel {next_map}")
+                    else:
+                        await send_instant_command("disconnect;startupmenu force")
         
         # All other checks
         # Item checks e.g. portal gun upgrade, potatos

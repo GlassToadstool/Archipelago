@@ -94,6 +94,7 @@ class MapMenuElement(MenuElement):
     def __init__(self, parent, chapter_number, map_number, title, map_code, location_id, required_items, pic):
         self.location_id = location_id
         self.required_items = required_items
+        self.map_code = map_code
         self.sub_location_completion = get_sub_locations(
             title, parent.parent.has_wheatley_monitors, parent.parent.has_ratman_dens, parent.parent.has_vitrified_doors
         )
@@ -143,14 +144,13 @@ class MapMenuElement(MenuElement):
         }
         return info
 
-    def complete_map(self, map_id: int) -> bool:
+    def complete_map(self, map_id: int) -> str | bool:
         if self.location_id == map_id:
-            if self.completed:
-                return True
             self.completed = True
             self.refresh_title()
             if self.next_map:
                 self.next_map.command = self.next_map.command.replace("command_deactivated", "command")
+                return self.next_map.map_code
             return True
         else:
             if self.next_map:
@@ -162,14 +162,21 @@ class MapMenuElement(MenuElement):
         if sub_location in self.sub_location_completion:
             self.sub_location_completion[sub_location] = True
             self.refresh_title()
+            return True
         elif self.next_map:
-            self.next_map.complete_sub_location_check(sub_location)
+            return self.next_map.complete_sub_location_check(sub_location)
+        return False
 
-    def complete_check(self, location_id: int):
-        if not self.complete_map(location_id):
-            location_name = self.parent.parent.client.location_names.lookup_in_game(location_id)
-            if "Complete" not in location_name:
-                self.complete_sub_location_check(location_name)
+    def complete_check(self, location_id: int) -> str | bool:
+        map_complete = self.complete_map(location_id)
+        if map_complete:
+            return map_complete
+        
+        location_name = self.parent.parent.client.location_names.lookup_in_game(location_id)
+        if "Complete" not in location_name:
+            return self.complete_sub_location_check(location_name)
+        return False
+
 
 blank_map_element = lambda parent, chapter_number: MapMenuElement(parent, chapter_number, 0, "No Maps In This Chapter", "", -1, [], "")
 
@@ -248,9 +255,10 @@ class ChapterMenuElement(MenuElement):
         if self.first_map:
             self.first_map.complete_sub_location_check(sub_location)
         
-    def complete_check(self, location_id: int):
+    def complete_check(self, location_id: int) -> str | bool:
         if self.first_map:
-            self.first_map.complete_check(location_id)
+            return self.first_map.complete_check(location_id)
+        return False
             
     def get_chapter_info(self):
         maps = []
@@ -305,9 +313,12 @@ class GameMapMenu:
         for chapter in self.chapters:
             chapter.complete_sub_location_check(sub_location)
 
-    def complete_check(self, location_id: int):
+    def complete_check(self, location_id: int) -> str | bool:
         for chapter in self.chapters:
-            chapter.complete_check(location_id)
+            found_check = chapter.complete_check(location_id)
+            if found_check:
+                return found_check
+        return False
             
     def get_menu_info(self) -> dict[str, dict]:
         menu_info = {}
@@ -315,3 +326,4 @@ class GameMapMenu:
             chapter_info = chapter.get_chapter_info()
             menu_info[chapter_info["chapter_name"]] = chapter_info["maps"]
         return menu_info
+    
