@@ -59,7 +59,7 @@ class MapInfo(MDGridLayout):
         chapter_info_string +=  "\n\n"
         
         if self.map_data["sub_locations"]:
-            chapter_info_string += "Sublocations:\n"
+            chapter_info_string += "Sub locations:\n"
             sub_locations_incomplete = [name for name, complete in self.map_data["sub_locations"].items() if not complete]
             if sub_locations_incomplete:
                 chapter_info_string += ', '.join(sub_locations_incomplete)
