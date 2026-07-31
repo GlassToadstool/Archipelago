@@ -145,18 +145,18 @@ story_achievements_table: dict[str, Portal2LocationData] = {
 achievements_table: dict[str, Portal2LocationData] = {}
 
 wheatley_monitor_table: dict[str, Portal2LocationData] = {
-    "Wheatley Monitor 1": Portal2LocationData("sp_a4_tb_intro", LocationType.WHEATLY_MONITOR, [portal_gun_2, funnel, frankenturret]),
-    "Wheatley Monitor 2": Portal2LocationData("sp_a4_tb_trust_drop", LocationType.WHEATLY_MONITOR, [portal_gun_2, button, funnel, frankenturret]),
-    "Wheatley Monitor 3": Portal2LocationData("sp_a4_tb_wall_button", LocationType.WHEATLY_MONITOR, [portal_gun_2]),
-    "Wheatley Monitor 4": Portal2LocationData("sp_a4_tb_polarity", LocationType.WHEATLY_MONITOR, [turrets]),
-    "Wheatley Monitor 5": Portal2LocationData("sp_a4_tb_catch 1", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, funnel, faith_plate, button]), #monitor1
-    "Wheatley Monitor 6": Portal2LocationData("sp_a4_tb_catch 2", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, funnel, faith_plate, button]), #monitor2
-    "Wheatley Monitor 7": Portal2LocationData("sp_a4_stop_the_box", LocationType.WHEATLY_MONITOR, [faith_plate]),
-    "Wheatley Monitor 8": Portal2LocationData("sp_a4_laser_catapult", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, faith_plate, funnel, reflection_cube, laser, laser_catcher]),
-    "Wheatley Monitor 9": Portal2LocationData("sp_a4_laser_platform", LocationType.WHEATLY_MONITOR, [portal_gun_2, laser, laser_catcher, reflection_cube, button]),
-    "Wheatley Monitor 10": Portal2LocationData("sp_a4_speed_tb_catch", LocationType.WHEATLY_MONITOR, [portal_gun_2]),
-    "Wheatley Monitor 11": Portal2LocationData("sp_a4_jump_polarity", LocationType.WHEATLY_MONITOR, [portal_gun_2, blue_gel, white_gel, funnel, turrets, floor_button, button]),
-    "Wheatley Monitor 12": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, white_gel]),
+    "Wheatley Monitor 1 (Funnel Intro)": Portal2LocationData("sp_a4_tb_intro", LocationType.WHEATLY_MONITOR, [portal_gun_2, funnel, frankenturret]),
+    "Wheatley Monitor 2 (Ceiling Button)": Portal2LocationData("sp_a4_tb_trust_drop", LocationType.WHEATLY_MONITOR, [portal_gun_2, button, funnel, frankenturret]),
+    "Wheatley Monitor 3 (Wall Button)": Portal2LocationData("sp_a4_tb_wall_button", LocationType.WHEATLY_MONITOR, [portal_gun_2]),
+    "Wheatley Monitor 4 (Polarity)": Portal2LocationData("sp_a4_tb_polarity", LocationType.WHEATLY_MONITOR, [turrets]),
+    "Wheatley Monitor 5 (Funnel Catch)": Portal2LocationData("sp_a4_tb_catch 1", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, funnel, faith_plate, button]), #monitor1
+    "Wheatley Monitor 6 (Funnel Catch)": Portal2LocationData("sp_a4_tb_catch 2", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, funnel, faith_plate, button]), #monitor2
+    "Wheatley Monitor 7 (Stop The Box)": Portal2LocationData("sp_a4_stop_the_box", LocationType.WHEATLY_MONITOR, [faith_plate]),
+    "Wheatley Monitor 8 (Laser Catapult)": Portal2LocationData("sp_a4_laser_catapult", LocationType.WHEATLY_MONITOR, [portal_gun_2, frankenturret, faith_plate, funnel, reflection_cube, laser, laser_catcher]),
+    "Wheatley Monitor 9 (Laser Platform)": Portal2LocationData("sp_a4_laser_platform", LocationType.WHEATLY_MONITOR, [portal_gun_2, laser, laser_catcher, reflection_cube, button]),
+    "Wheatley Monitor 10 (Propulsion Catch)": Portal2LocationData("sp_a4_speed_tb_catch", LocationType.WHEATLY_MONITOR, [portal_gun_2]),
+    "Wheatley Monitor 11 (Repulsion Polarity)": Portal2LocationData("sp_a4_jump_polarity", LocationType.WHEATLY_MONITOR, [portal_gun_2, blue_gel, white_gel, funnel, turrets, floor_button, button]),
+    "Wheatley Monitor 12 (Finale 3)": Portal2LocationData("sp_a4_finale3", LocationType.WHEATLY_MONITOR, [portal_gun_2, white_gel]),
 }
 
 # Note: these are the names used in game to identify the monitors
@@ -172,29 +172,29 @@ item_location_table: dict[str, Portal2LocationData] = {
 item_maps_to_item_location : dict[str, str] = {value.map_name:key for key, value in item_location_table.items()}
 
 ratman_den_locations_table: dict[str, Portal2LocationData] = {
-    "Ratman Den 1": Portal2LocationData("sp_a1_intro4", LocationType.RATMAN_DEN, [weighted_cube, floor_button]),
-    "Ratman Den 2": Portal2LocationData("sp_a2_dual_lasers", LocationType.RATMAN_DEN),
-    "Ratman Den 3": Portal2LocationData("sp_a2_trust_fling", LocationType.RATMAN_DEN, [portal_gun_2, faith_plate]),
-    "Ratman Den 4": Portal2LocationData("sp_a2_bridge_intro", LocationType.RATMAN_DEN),
-    "Ratman Den 5": Portal2LocationData("sp_a2_bridge_the_gap", LocationType.RATMAN_DEN, [portal_gun_2, bridge]),
-    "Ratman Den 6": Portal2LocationData("sp_a2_laser_vs_turret", LocationType.RATMAN_DEN, [portal_gun_2, laser, floor_button, reflection_cube]),
-    "Ratman Den 7": Portal2LocationData("sp_a2_pull_the_rug", LocationType.RATMAN_DEN, [portal_gun_2, bridge])
+    "Ratman Den 1 (Smooth Jazz)": Portal2LocationData("sp_a1_intro4", LocationType.RATMAN_DEN, [weighted_cube, floor_button]),
+    "Ratman Den 2 (Dual Lasers)": Portal2LocationData("sp_a2_dual_lasers", LocationType.RATMAN_DEN),
+    "Ratman Den 3 (Trust Fling)": Portal2LocationData("sp_a2_trust_fling", LocationType.RATMAN_DEN, [portal_gun_2, faith_plate]),
+    "Ratman Den 4 (Bridge Intro)": Portal2LocationData("sp_a2_bridge_intro", LocationType.RATMAN_DEN),
+    "Ratman Den 5 (Bridge the Gap)": Portal2LocationData("sp_a2_bridge_the_gap", LocationType.RATMAN_DEN, [portal_gun_2, bridge]),
+    "Ratman Den 6 (Laser Vs. Turret)": Portal2LocationData("sp_a2_laser_vs_turret", LocationType.RATMAN_DEN, [portal_gun_2, laser, floor_button, reflection_cube]),
+    "Ratman Den 7 (Pull The Rug)": Portal2LocationData("sp_a2_pull_the_rug", LocationType.RATMAN_DEN, [portal_gun_2, bridge])
 }
 
 ratman_map_to_ratman_den: dict[str, str] = {value.map_name: key for key, value in ratman_den_locations_table.items()}
 
 vitrified_door_locations_table: dict[str, Portal2LocationData] = {
-    "Vitrified Door 1": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
-    "Vitrified Door 2": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
-    "Vitrified Door 3": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
-    "Vitrified Door 4": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
-    "Vitrified Door 5": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
-    "Vitrified Door 6": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 1 (Cave Johnson)": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 2 (Cave Johnson)": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 3 (Cave Johnson)": Portal2LocationData("sp_a3_03", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 4 (PotatOS)": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 5 (PotatOS)": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
+    "Vitrified Door 6 (PotatOS)": Portal2LocationData("sp_a3_transition01", LocationType.OTHER, [portal_gun_2], 6),
 }
 
 vitrified_map_to_vitrified_door: dict[str, list[str]] = {
-    "sp_a3_03": ["Vitrified Door 1", "Vitrified Door 2", "Vitrified Door 3"],
-    "sp_a3_transition01": ["Vitrified Door 4", "Vitrified Door 5", "Vitrified Door 6"]
+    "sp_a3_03": ["Vitrified Door 1 (Cave Johnson)", "Vitrified Door 2 (Cave Johnson)", "Vitrified Door 3 (Cave Johnson)"],
+    "sp_a3_transition01": ["Vitrified Door 4 (PotatOS)", "Vitrified Door 5 (PotatOS)", "Vitrified Door 6 (PotatOS)"]
 }
 
 all_locations_table: dict[str, Portal2LocationData] = map_complete_table.copy()
@@ -284,24 +284,24 @@ speedrun_logic_table: dict[str, list[str]] = {
 sub_locations_in_maps: dict[str, list[str]] = {
     "Portal Gun Completion": [portal_gun_1],
     "Incinerator Completion": [portal_gun_2],
-    "PotatOS Completion": [potatos, "Vitrified Door 4", "Vitrified Door 5", "Vitrified Door 6"],
-    "Funnel Intro Completion": ["Wheatley Monitor 1"],
-    "Ceiling Button Completion": ["Wheatley Monitor 2"],
-    "Wall Button Completion": ["Wheatley Monitor 3"],
-    "Polarity Completion": ["Wheatley Monitor 4"],
-    "Funnel Catch Completion": ["Wheatley Monitor 5", "Wheatley Monitor 6"],
-    "Stop The Box Completion": ["Wheatley Monitor 7"],
-    "Laser Catapult Completion": ["Wheatley Monitor 8"],
-    "Laser Platform Completion": ["Wheatley Monitor 9"],
-    "Propulsion Catch Completion": ["Wheatley Monitor 10"],
-    "Repulsion Polarity Completion": ["Wheatley Monitor 11"],
-    "Finale 3 Completion": ["Wheatley Monitor 12"],
-    "Smooth Jazz Completion": ["Ratman Den 1"],
-    "Dual Lasers Completion": ["Ratman Den 2"],
-    "Trust Fling Completion": ["Ratman Den 3"],
-    "Bridge Intro Completion": ["Ratman Den 4"],
-    "Bridge the Gap Completion": ["Ratman Den 5"],
-    "Laser Vs. Turret Completion": ["Ratman Den 6"],
-    "Pull The Rug Completion": ["Ratman Den 7"],
-    "Cave Johnson Completion": ["Vitrified Door 1", "Vitrified Door 2", "Vitrified Door 3"],
+    "PotatOS Completion": [potatos, "Vitrified Door 4 (PotatOS)", "Vitrified Door 5 (PotatOS)", "Vitrified Door 6 (PotatOS)"],
+    "Funnel Intro Completion": ["Wheatley Monitor 1 (Funnel Intro)"],
+    "Ceiling Button Completion": ["Wheatley Monitor 2 (Ceiling Button)"],
+    "Wall Button Completion": ["Wheatley Monitor 3 (Wall Button)"],
+    "Polarity Completion": ["Wheatley Monitor 4 (Polarity)"],
+    "Funnel Catch Completion": ["Wheatley Monitor 5 (Funnel Catch)", "Wheatley Monitor 6 (Funnel Catch)"],
+    "Stop The Box Completion": ["Wheatley Monitor 7 (Stop The Box)"],
+    "Laser Catapult Completion": ["Wheatley Monitor 8 (Laser Catapult)"],
+    "Laser Platform Completion": ["Wheatley Monitor 9 (Laser Platform)"],
+    "Propulsion Catch Completion": ["Wheatley Monitor 10 (Propulsion Catch)"],
+    "Repulsion Polarity Completion": ["Wheatley Monitor 11 (Repulsion Polarity)"],
+    "Finale 3 Completion": ["Wheatley Monitor 12 (Finale 3)"],
+    "Smooth Jazz Completion": ["Ratman Den 1 (Smooth Jazz)"],
+    "Dual Lasers Completion": ["Ratman Den 2 (Dual Lasers)"],
+    "Trust Fling Completion": ["Ratman Den 3 (Trust Fling)"],
+    "Bridge Intro Completion": ["Ratman Den 4 (Bridge Intro)"],
+    "Bridge the Gap Completion": ["Ratman Den 5 (Bridge the Gap)"],
+    "Laser Vs. Turret Completion": ["Ratman Den 6 (Laser Vs. Turret)"],
+    "Pull The Rug Completion": ["Ratman Den 7 (Pull The Rug)"],
+    "Cave Johnson Completion": ["Vitrified Door 1 (Cave Johnson)", "Vitrified Door 2 (Cave Johnson)", "Vitrified Door 3 (Cave Johnson)"],
 }
