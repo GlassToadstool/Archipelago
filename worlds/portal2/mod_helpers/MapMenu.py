@@ -102,6 +102,7 @@ class MapMenuElement(MenuElement):
         new_title = title.removesuffix(" Completion")
         super().__init__(parent, f"chapter {chapter_number}.{map_number}", new_title, subtitle, f"map {map_code}", pic)
         self.info_text = indicator_characters["map"] + parse_sub_locations(self.sub_location_completion)
+        self.total_locations = len(self.sub_location_completion) + 1
 
     def refresh_title(self, blocked: bool = False):
         self.info_text = indicator_characters["completed"] if self.completed else indicator_characters["map"]
@@ -140,7 +141,9 @@ class MapMenuElement(MenuElement):
             "required_items": [item for item in self.required_items if item in self.parent.parent.client.item_list],
             "location_id": self.location_id,
             "title": self.title[2:],
-            "command": self.command
+            "command": self.command,
+            "total_locations": self.total_locations,
+            "finished_locations": (1 if self.completed else 0) + len([name for name, complete in self.sub_location_completion.items() if complete])
         }
         return info
 

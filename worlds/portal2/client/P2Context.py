@@ -137,9 +137,15 @@ class MenuLayout(MDGridLayout):
         self.add_widget(self.chapter_area)
         self.add_widget(self.map_area)
 
-        for chapter_name in self.menu_info.keys():
+        for chapter_name, maps in self.menu_info.items():
+            total_checks = 0
+            finished_checks = 0
+            for map in maps:
+                total_checks += map["total_locations"]
+                finished_checks += map["finished_locations"]
+            
             chapter_button = MDButton(
-                MDButtonText(text=chapter_name),
+                MDButtonText(text=f"{chapter_name} {finished_checks}/{total_checks}"),
                 on_release=lambda btn, chapter=chapter_name: self.select_chapter(
                     chapter
                 )
@@ -180,7 +186,7 @@ class MenuLayout(MDGridLayout):
         disable_map = False
         for map in map_data:
             map_button = MDButton(
-                MDButtonText(text=map['title']),
+                MDButtonText(text=f"{map['title']} {map["finished_locations"]}/{map["total_locations"]}"),
                 on_release=lambda btn, _map_name=map['title']: self.select_map(
                     _map_name,
                 )
