@@ -91,6 +91,34 @@ class MapInfo(MDGridLayout):
         """
         
         async_start(send_instant_command(f"{self.map_data['command']}"), "send_map_command")
+        
+class ChapterButton(MDButton):
+    
+    def __init__(self, chapter_name: str, chapter_maps: list, on_release):
+        self.chapter_name = chapter_name
+        self.chapter_maps = chapter_maps
+        finished_checks, total_checks = self.calculate_completeness()
+        
+        self.button_text = MDButtonText(text=f"{self.chapter_name} {finished_checks}/{total_checks}")
+                
+        super().__init__(
+                self.button_text,
+                on_release = on_release
+        )
+        
+    def calculate_completeness(self) -> tuple:
+        total_checks = 0
+        finished_checks = 0
+        for map in self.chapter_maps:
+            total_checks += map["total_locations"]
+            finished_checks += map["finished_locations"]
+            
+        return finished_checks, total_checks
+        
+    def update_title(self, chapter_maps: dict):
+        self.chapter_maps = chapter_maps
+        finished_checks, total_checks = self.calculate_completeness()
+        self.button_text.text = f"{self.chapter_name} {finished_checks}/{total_checks}"
 
 
 class MenuLayout(MDGridLayout):
@@ -98,11 +126,13 @@ class MenuLayout(MDGridLayout):
     def __init__(self):
         super().__init__(rows=1, cols=3, padding=[40, 10])
         self.menu_info = []
-        self.current_chapter = None
+        self.selected_chapter = None
+        self.selected_map = None
         self.map_area = None
         self.map_info = None
         self.is_open_world = False
         self.return_to_menu = False
+        self.chapter_buttons: list[ChapterButton] = []
 
     def update_menu(self, menu_data: dict[str, dict]):
         """
@@ -111,9 +141,18 @@ class MenuLayout(MDGridLayout):
         """
         self.menu_info = menu_data
         
-        selected_chapter = self.current_chapter or list(self.menu_info.keys())[0]
+        self.refresh_chapter_titles()
+        
+        selected_chapter = self.selected_chapter or list(self.menu_info.keys())[0]
         if self.map_area is not None:
             self.select_chapter(selected_chapter)
+            
+            if self.selected_map:
+                self.select_map(self.selected_map)
+            
+    def refresh_chapter_titles(self):
+        for cb in self.chapter_buttons:
+            cb.update_title(self.menu_info[cb.chapter_name])
             
     def set_open_world(self):
         self.is_open_world = True
@@ -137,19 +176,9 @@ class MenuLayout(MDGridLayout):
         self.add_widget(self.chapter_area)
         self.add_widget(self.map_area)
 
-        for chapter_name, maps in self.menu_info.items():
-            total_checks = 0
-            finished_checks = 0
-            for map in maps:
-                total_checks += map["total_locations"]
-                finished_checks += map["finished_locations"]
-            
-            chapter_button = MDButton(
-                MDButtonText(text=f"{chapter_name} {finished_checks}/{total_checks}"),
-                on_release=lambda btn, chapter=chapter_name: self.select_chapter(
-                    chapter
-                )
-            )
+        for chapter_name, maps in self.menu_info.items():            
+            chapter_button = ChapterButton(chapter_name, maps, lambda btn, chapter=chapter_name: self.select_chapter(chapter))
+            self.chapter_buttons.append(chapter_button)
             self.chapter_area.add_widget(chapter_button)
         
         menu_toggle_box = MDGridLayout(cols=2, row_default_height=40, row_force_default=True, padding=10)
@@ -169,7 +198,7 @@ class MenuLayout(MDGridLayout):
         if self.map_area is None:
             raise Exception("Map area not initialized. Call build() before select_chapter().")
         
-        self.current_chapter = chapter_name
+        self.selected_chapter = chapter_name
 
         for child in self.map_area.layout.children[:]:
             self.map_area.layout.remove_widget(child)
@@ -201,12 +230,14 @@ class MenuLayout(MDGridLayout):
         - Handle the selection of a map button
         - Send map command to the game to load the selected map
         """
-        maps = self.menu_info[self.current_chapter]
+        maps = self.menu_info[self.selected_chapter]
         map_data = next((map for map in maps if map["title"] == map_name), None)
         
         if not map_data:
-            print(f"Map '{map_name}' not found in chapter '{self.current_chapter}'")
+            print(f"Map '{map_name}' not found in chapter '{self.selected_chapter}'")
             return
+        
+        self.selected_map = map_data["title"]
         
         # Replace the map info area
         if self.map_info:
