@@ -114,7 +114,7 @@ class Portal2Context(CommonContext):
         with open(menu_file, "w", encoding='utf-8') as f:
             f.write(str(self.game_map_menu))
             
-        self.client_map_menu.update_menu(self.game_map_menu.get_menu_info())
+        self.client_map_menu.update_menu(self.game_map_menu.get_menu_info(), type(check_completed) == str)
         return check_completed
 
     def refresh_menu(self):
@@ -262,8 +262,6 @@ class Portal2Context(CommonContext):
                 if done_map == self.goal_map_code:
                     await self.handle_goal_completion()
                 else:
-                    logger.info(self.client_map_menu.return_to_menu)
-                    logger.info(next_map)
                     if not self.client_map_menu.return_to_menu and type(next_map) == str:
                         await send_instant_command(f"changelevel {next_map}")
                     else:

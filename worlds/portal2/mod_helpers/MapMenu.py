@@ -325,7 +325,7 @@ class GameMapMenu:
                 return found_check
         return False
             
-    def get_menu_info(self) -> dict[str, dict]:
+    def get_menu_info(self) -> dict[str, list]:
         menu_info = {}
         for chapter in self.chapters:
             chapter_info = chapter.get_chapter_info()

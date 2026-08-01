@@ -158,7 +158,7 @@ class ChapterButton(SelectableButton):
 
         return finished_checks, total_checks
 
-    def update_title(self, chapter_maps: dict):
+    def update_title(self, chapter_maps: list):
         self.chapter_maps = chapter_maps
         finished_checks, total_checks = self.calculate_completeness()
         self.count_label.text = f"{finished_checks}/{total_checks}"
@@ -168,7 +168,7 @@ class MenuLayout(MDGridLayout):
 
     def __init__(self):
         super().__init__(rows=1, cols=3, padding=[40, 10], spacing=dp(10))
-        self.menu_info = []
+        self.menu_info = {}
         self.selected_chapter_btn: ChapterButton = None
         self.selected_map_btn: SelectableButton = None
         self.map_area = None
@@ -179,7 +179,7 @@ class MenuLayout(MDGridLayout):
         self.map_buttons: list[SelectableButton] = []
         self.built = False
 
-    def update_menu(self, menu_data: dict[str, dict]):
+    def update_menu(self, menu_data: dict[str, list], map_finished: bool = False):
         """
         - Set the map data
         - Update the menu
@@ -192,7 +192,15 @@ class MenuLayout(MDGridLayout):
             self.select_chapter(self.selected_chapter_btn.name, self.selected_chapter_btn)
 
             if self.selected_map_btn:
-                self.select_map(self.selected_map_btn.name)
+                if not self.return_to_menu and map_finished:
+                    # Try to select next map in chapter
+                    current_chapter = next((m for m in self.map_buttons if m.name == self.selected_map_btn.name), None)
+                    if current_chapter:
+                        index = self.map_buttons.index(current_chapter)
+                        if index + 1 < len(self.map_buttons):
+                            self.select_map(self.map_buttons[index+1].name, self.map_buttons[index+1])
+                else:
+                    self.select_map(self.selected_map_btn.name)
 
     def refresh_chapter_titles(self):
         for cb in self.chapter_buttons:
