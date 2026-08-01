@@ -302,6 +302,8 @@ class GameMapMenu:
         self.chapter_dict = chapter_dict
 
     def generate_menu(self):
+        if self.chapters:
+            return
         for chapter_number, map_names in self.chapter_dict.items():
             self.chapters.append(ChapterMenuElement(self, chapter_number, map_names))
 

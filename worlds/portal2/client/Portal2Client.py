@@ -402,7 +402,8 @@ class Portal2Context(CommonContext):
             potatos_not_inplace()
         
         self.game_map_menu.generate_menu()
-        self.client_map_menu = self.get_menu()
+        if not self.client_map_menu:
+            self.client_map_menu = self.get_menu()
         self.refresh_menu()
         self.client_map_menu.build()
 
