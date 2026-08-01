@@ -46,7 +46,7 @@ class P2ClientCommandProcessor(ClientCommandProcessor):
 class MapInfo(MDGridLayout):
 
     def __init__(self, map_data: dict):
-        super().__init__(rows=2, cols=1, padding=[0, 50])
+        super().__init__(rows=2, cols=1)
         self.map_data = map_data
         self.build()
 
@@ -191,7 +191,7 @@ class MenuLayout(MDGridLayout):
             chapter_button = ChapterButton(
                 chapter_name,
                 maps,
-                lambda btn, chapter=chapter_name: self.select_chapter(chapter),
+                lambda btn, chapter=chapter_name: self.select_chapter(chapter)
             )
             self.chapter_buttons.append(chapter_button)
             self.chapter_area.layout.add_widget(chapter_button)
@@ -202,11 +202,10 @@ class MenuLayout(MDGridLayout):
             row_force_default=True,
             padding=dp(10),
             md_bg_color=[1, 1, 1, 0.1],
-            width=dp(200),
+            width=dp(220),
             size_hint_x=None,
             height=dp(60),
             size_hint_y=None,
-            line_color=[0, 0, 0, 0],
             radius=dp(10),
         )
         self.auto_next_map_button = MDIconButton(
