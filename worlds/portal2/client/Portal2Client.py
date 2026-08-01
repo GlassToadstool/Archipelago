@@ -477,14 +477,7 @@ class Portal2Context(CommonContext):
 
         self.item_remove_commands = temp_commands
         
-    def make_gui(self):
-        from kvui import GameManager
-        ui = super().make_gui()
-        ui.base_title = "Portal 2 Client"
-        ui.icon = r"worlds/portal2/data/Portalpelago.png"
-
-        return ui
-    
+        
     async def shutdown(self):
         self.server_address = ""
         self.username = None

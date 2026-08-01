@@ -2,7 +2,7 @@ tracker_loaded = False
 try:
     from worlds.tracker.TrackerClient import (
         TrackerGameContext as CommonContext,
-        TrackerCommandProcessor as ClientCommandProcessor,
+        TrackerCommandProcessor as ClientCommandProcessor
     )
 
     tracker_loaded = True
@@ -300,8 +300,10 @@ class P2GameManager(GameManager):
 class P2CommonContext(CommonContext):
 
     def make_gui(self) -> "type[kvui.GameManager]":
-        class TextManager(P2GameManager):
+        ui = super().make_gui()
+        class TextManager(ui, P2GameManager):
             base_title = "Portal 2 Text Client"
+            icon = r"worlds/portal2/data/Portalpelago.png"
 
         return TextManager
 
