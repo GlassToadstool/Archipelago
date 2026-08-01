@@ -158,7 +158,7 @@ def potatos_not_inplace():
     
 def portal_gun_upgrade_not_inplace():
     global map_specific_commands
-    map_specific_commands.append(MapCommand("sp_a2_intro", portal_gun_2, ["script InciniratorDisablePortalGun()\n"]))
+    map_specific_commands.append(MapCommand("sp_a2_intro", portal_gun_2, ["script IncineratorDisablePortalGun()\n"]))
 
 # Option based commands
 ratman_den_commands: list[MapCommand] = [
