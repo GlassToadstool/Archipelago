@@ -69,13 +69,7 @@ class Portal2CommandProcessor(ClientCommandProcessor):
                            f"{"All items acquired" if not requirements_not_collected else "Still needed: \n" + ", ".join(requirements_not_collected)}")
                 break
         self.output(message)
-
-    def _cmd_ping(self):
-        async def player_in_map(compro):
-            is_in_map = await compro.ctx.is_player_in_map()
-            compro.output("pong" if is_in_map else "no pong recieved from server")
-        loop = asyncio.get_event_loop()
-        loop.create_task(player_in_map(self))
+        
 
 class Portal2Context(CommonContext):
     command_processor = Portal2CommandProcessor
