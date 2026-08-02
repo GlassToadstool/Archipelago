@@ -219,7 +219,8 @@ class Portal2World(World):
         if self.options.logic_difficulty == LogicDifficultyOption.SPEEDRUNNER:
             for map_location in self.maps_in_use:
                 if map_location in speedrun_logic_table:
-                    self.location_logic[map_location] = speedrun_logic_table[map_location]
+                    random_logic = self.random.choice(speedrun_logic_table[map_location])
+                    self.location_logic[map_location] = random_logic
 
     def create_regions(self) -> None:
         menu_region = Region("Menu", self.player, self.multiworld)
