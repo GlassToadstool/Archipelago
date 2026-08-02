@@ -114,7 +114,7 @@ class Portal2Context(CommonContext):
         with open(menu_file, "w", encoding='utf-8') as f:
             f.write(str(self.game_map_menu))
             
-        self.client_map_menu.update_menu(self.game_map_menu.get_menu_info(), type(check_completed) == str)
+        self.client_map_menu.update_menu(self.game_map_menu.get_menu_info(), location_id)
         return check_completed
 
     def refresh_menu(self):

@@ -200,7 +200,7 @@ class MenuLayout(MDGridLayout):
         self.map_buttons: list[SelectableButton] = []
         self.built = False
 
-    def update_menu(self, menu_data: dict[str, list], map_finished: bool = False):
+    def update_menu(self, menu_data: dict[str, list], location_id: int | None = None):
         """
         - Set the map data
         - Update the menu
@@ -215,9 +215,9 @@ class MenuLayout(MDGridLayout):
             )
 
             if self.selected_map_btn:
-                if not self.return_to_menu and map_finished:
+                if not self.return_to_menu and location_id == self.map_info.map_data["location_id"]:
                     # Try to select next map in chapter
-                    current_chapter = next(
+                    current_map = next(
                         (
                             m
                             for m in self.map_buttons
@@ -225,8 +225,8 @@ class MenuLayout(MDGridLayout):
                         ),
                         None,
                     )
-                    if current_chapter:
-                        index = self.map_buttons.index(current_chapter)
+                    if current_map:
+                        index = self.map_buttons.index(current_map)
                         if index + 1 < len(self.map_buttons):
                             self.select_map(
                                 self.map_buttons[index + 1].name,
