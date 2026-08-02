@@ -45,48 +45,72 @@ class P2ClientCommandProcessor(ClientCommandProcessor):
         super().__init__(context)
 
 
-class MapInfo(MDGridLayout):
+class PlayMapButton(MDButton):
+
+    def __init__(self, playable: bool = False, on_release = None):
+        if playable:
+            button_text = "Play Map"
+        else:
+            button_text = "Map not yet available"
+        super().__init__(
+            MDButtonText(text=button_text),
+            disabled=not playable
+        )
+        
+            
+        if on_release is not None:
+            self.bind(on_release=on_release)
+
+
+class MapInfo(MDBoxLayout):
 
     def __init__(self, map_data: dict):
-        super().__init__(rows=2, cols=1)
+        super().__init__(
+            orientation="vertical",
+            padding=[dp(12), dp(8)],
+            spacing=dp(8),
+            md_bg_color=[1, 1, 1, 0.12],
+            radius=dp(6)
+        )
         self.map_data = map_data
         self.build()
 
     def build(self):
-        chapter_info_string = f"{self.map_data["title"]}\n\nRequired Items:\n"
+        chapter_name_label = MDLabel(text=self.map_data["title"], halign="center", height=dp(40), size_hint_y=None)
+        self.add_widget(chapter_name_label)
+        
+        required_items_str = "Required Items:\n"
 
         if self.map_data["required_items"]:
-            chapter_info_string += ", ".join(self.map_data["required_items"])
+            required_items_str += ", ".join(self.map_data["required_items"])
         else:
-            chapter_info_string += "All required items acquired"
+            required_items_str += "All required items acquired"
 
-        chapter_info_string += "\n\n"
+        required_items_label = MDLabel(text=required_items_str)
+        self.add_widget(required_items_label)
 
         if self.map_data["sub_locations"]:
-            chapter_info_string += "Sub locations:\n"
+            sub_location_str = "Sub locations:\n"
             sub_locations_incomplete = [
                 name
                 for name, complete in self.map_data["sub_locations"].items()
                 if not complete
             ]
             if sub_locations_incomplete:
-                chapter_info_string += ", ".join(sub_locations_incomplete)
+                sub_location_str += ", ".join(sub_locations_incomplete)
             else:
-                chapter_info_string += "All sublocations completed"
+                sub_location_str += "All sub locations completed"
 
-        self.chapter_info = MDLabel(text=chapter_info_string)
+            sub_location_label = MDLabel(text=sub_location_str)
+            self.add_widget(sub_location_label)
 
         if self.map_data["disabled"]:
-            self.play_map_button = MDButton(
-                MDButtonText(text="Map not yet available"), disabled=True
-            )
+            self.play_map_button = PlayMapButton(playable=False)
         else:
-            self.play_map_button = MDButton(
-                MDButtonText(text="Play Map"), on_release=lambda btn: self.play_map()
+            self.play_map_button = PlayMapButton(
+                playable=True, on_release=lambda btn: self.play_map()
             )
 
-        # Add all these to the layout
-        self.add_widget(self.chapter_info)
         self.add_widget(self.play_map_button)
 
     def play_map(self):
@@ -115,10 +139,7 @@ class SelectableButton(ButtonBehavior, MDBoxLayout):
         )
 
         self.name_label = MDLabel(
-            text=name_text, 
-            width=dp(150),
-            size_hint_x=None,
-            halign="left"
+            text=name_text, width=dp(150), size_hint_x=None, halign="left"
         )
         self.count_label = MDLabel(
             text=count_text,
@@ -131,12 +152,11 @@ class SelectableButton(ButtonBehavior, MDBoxLayout):
         if on_release is not None:
             self.bind(on_release=on_release)
 
-            
     def select(self):
         self.md_bg_color = [1, 1, 1, 0.3]
-        
+
     def deselect(self):
-        self.md_bg_color=[1, 1, 1, 0.12]
+        self.md_bg_color = [1, 1, 1, 0.12]
 
 
 class ChapterButton(SelectableButton):
@@ -145,9 +165,10 @@ class ChapterButton(SelectableButton):
         self.chapter_name = chapter_name
         self.chapter_maps = chapter_maps
         finished_checks, total_checks = self.calculate_completeness()
-        
-        super().__init__(self.chapter_name, f"{finished_checks}/{total_checks}", on_release)
-        
+
+        super().__init__(
+            self.chapter_name, f"{finished_checks}/{total_checks}", on_release
+        )
 
     def calculate_completeness(self) -> tuple:
         total_checks = 0
@@ -189,16 +210,28 @@ class MenuLayout(MDGridLayout):
         self.refresh_chapter_titles()
 
         if self.map_area and self.selected_chapter_btn:
-            self.select_chapter(self.selected_chapter_btn.name, self.selected_chapter_btn)
+            self.select_chapter(
+                self.selected_chapter_btn.name, self.selected_chapter_btn
+            )
 
             if self.selected_map_btn:
                 if not self.return_to_menu and map_finished:
                     # Try to select next map in chapter
-                    current_chapter = next((m for m in self.map_buttons if m.name == self.selected_map_btn.name), None)
+                    current_chapter = next(
+                        (
+                            m
+                            for m in self.map_buttons
+                            if m.name == self.selected_map_btn.name
+                        ),
+                        None,
+                    )
                     if current_chapter:
                         index = self.map_buttons.index(current_chapter)
                         if index + 1 < len(self.map_buttons):
-                            self.select_map(self.map_buttons[index+1].name, self.map_buttons[index+1])
+                            self.select_map(
+                                self.map_buttons[index + 1].name,
+                                self.map_buttons[index + 1],
+                            )
                 else:
                     self.select_map(self.selected_map_btn.name)
 
@@ -214,10 +247,10 @@ class MenuLayout(MDGridLayout):
         - List of chapter buttons on the left side
         - Add a dynamic list of map buttons on the right side of the grid that updates based on the selected chapter
         """
-        
+
         if self.built:
             return
-        
+
         self.built = True
 
         if self.menu_info is None:
@@ -274,10 +307,10 @@ class MenuLayout(MDGridLayout):
         - Remove the old map buttons
         - Add the list of new map buttons
         """
-        
+
         if self.selected_chapter_btn:
             self.selected_chapter_btn.deselect()
-        
+
         if btn:
             self.selected_chapter_btn = btn
             self.selected_chapter_btn.select()
@@ -286,7 +319,6 @@ class MenuLayout(MDGridLayout):
             raise Exception(
                 "Map area not initialized. Call build() before select_chapter()."
             )
-
 
         for child in self.map_area.layout.children[:]:
             self.map_area.layout.remove_widget(child)
@@ -301,7 +333,7 @@ class MenuLayout(MDGridLayout):
         disable_map = False
         for map in map_data:
             map_button = SelectableButton(
-                map['title'],
+                map["title"],
                 f"{map["finished_locations"]}/{map["total_locations"]}",
                 on_release=lambda btn, _map_name=map["title"]: self.select_map(
                     _map_name, btn
@@ -318,25 +350,26 @@ class MenuLayout(MDGridLayout):
         - Handle the selection of a map button
         - Send map command to the game to load the selected map
         """
-        
+
         if self.selected_map_btn:
             self.selected_map_btn.deselect()
-        
+
         if btn:
             self.selected_map_btn = btn
         else:
             possible_buttons = [btn for btn in self.map_buttons if btn.name == map_name]
             if len(possible_buttons) > 0:
                 self.selected_map_btn = possible_buttons[0]
-        
+
         self.selected_map_btn.select()
-        
-        
+
         maps = self.menu_info[self.selected_chapter_btn.chapter_name]
         map_data = next((map for map in maps if map["title"] == map_name), None)
 
         if not map_data:
-            print(f"Map '{map_name}' not found in chapter '{self.selected_chapter_btn.chapter_name}'")
+            print(
+                f"Map '{map_name}' not found in chapter '{self.selected_chapter_btn.chapter_name}'"
+            )
             return
 
         # Replace the map info area
