@@ -127,19 +127,19 @@ maps_in_chapters: dict[str, list[str]] = {
 
 # Not implemented
 story_achievements_table: dict[str, Portal2LocationData] = {
-    "Achievement: Wake Up Call": Portal2LocationData("sp_a1_intro1", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: You Monster": Portal2LocationData("sp_a1_wakeup", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Undiscouraged": Portal2LocationData("sp_a2_laser_intro", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Bridge Over Troubling Water": Portal2LocationData("sp_a2_bridge_intro", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: SaBOTour": Portal2LocationData("sp_a2_bts1", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Vertically Unchallenged": Portal2LocationData("sp_a3_jump_intro", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Stranger Than Friction": Portal2LocationData("sp_a3_speed_ramp", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: White Out": Portal2LocationData("sp_a3_portal_intro", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Dual Pit Experiment": Portal2LocationData("sp_a4_intro", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Tunnel of Funnel": Portal2LocationData("sp_a4_speed_catch", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: The Part Where He Kills You": Portal2LocationData("sp_a4_finale1", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Lunacy": Portal2LocationData("sp_a4_finale4", LocationType.STORY_ACHIEVEMENT),
-    "Achievement: Drop Box": Portal2LocationData(None, LocationType.STORY_ACHIEVEMENT),
+    achievement_wake_up_call: Portal2LocationData("sp_a1_intro1", LocationType.STORY_ACHIEVEMENT), # SURVIVE_CONTAINER_RIDE
+    achievement_you_monster: Portal2LocationData("sp_a1_wakeup", LocationType.STORY_ACHIEVEMENT), # achievement_wakeup_glados
+    achievement_undiscouraged: Portal2LocationData("sp_a2_laser_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, laser, laser_catcher]), # LASER
+    achievement_bridge_over_troubling_water: Portal2LocationData("sp_a2_bridge_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, bridge, floor_button, button, weighted_cube]), # BRIDGE
+    achievement_sabotour: Portal2LocationData("sp_a2_bts1", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, bridge, button]), # BREAK_OUT
+    achievement_vertically_unchallenged: Portal2LocationData("sp_a3_bomb_flings", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, old_button, blue_gel]), # achievement_blue_gel_entity
+    achievement_tater_tote: Portal2Location("sp_a3_transition01", LocationType.STORY_ACHIEVEMENT, [portal_gun_2]), # potatos_achievement - same location but additional check?
+    achievement_stranger_than_friction: Portal2LocationData("sp_a3_speed_flings", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, blue_gel, orange_gel, antique_cube, old_floor_button]), # achievement_orange_gel_entity
+    achievement_white_out: Portal2LocationData("sp_a3_portal_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, blue_gel, orange_gel, white_gel]), # achievement_white_gel_entity
+    achievement_dual_pit_experiment: Portal2LocationData("sp_a4_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, frankenturret, floor_button, button]), # logic_achievement_trivial_test
+    achievement_tunnel_of_funnel: Portal2LocationData("sp_a4_speed_tb_catch", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, floor_button, funnel, button, frankenturret, orange_gel]), # logic_achievement_tractor_beam
+    achievement_the_part_where_he_kills_you: Portal2LocationData("sp_a4_finale1", LocationType.STORY_ACHIEVEMENT, [faith_plate, funnel]), # achievement_crusher
+    achievement_lunacy: Portal2LocationData("sp_a4_finale4", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, potatos, blue_gel, orange_gel, white_gel, adventure_core, space_core, fact_core]), # moon_relay
 }
 
 # Not implementd

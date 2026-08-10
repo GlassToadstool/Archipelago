@@ -44,6 +44,12 @@ class CutsceneLevels(Toggle):
     Determines whether cutscene maps are added to the map pool
     """
     display_name = "Cutscene Levels"
+    
+class AchievementChecks(Toggle):
+    """
+    Determines whether achievements are added as location checks
+    """
+    display_name = "Achievement Checks"
    
 class LogicDifficultyOption:
     NORMAL = 0
@@ -141,6 +147,7 @@ portal2_option_groups = [
         LogicDifficulty,
         RemoveLocations,
         CutsceneLevels,
+        AchievementChecks,
         WheatleyMonitors,
         RatmanDens,
         VitrifiedDoors
@@ -170,6 +177,7 @@ class Portal2Options(PerGameCommonOptions):
 
     game_mode: GameMode
     cutscene_levels: CutsceneLevels
+    achievement_checks: AchievementChecks
     remove_locations: RemoveLocations
     early_playability_percentage: EarlyPlayabilityPercentage
     logic_difficulty: LogicDifficulty

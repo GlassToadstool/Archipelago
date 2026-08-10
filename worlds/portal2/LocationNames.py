@@ -94,3 +94,37 @@ vitrified_door_3_cave_johnson = "Vitrified Door 3 (Cave Johnson)"
 vitrified_door_4_potatos = "Vitrified Door 4 (PotatOS)"
 vitrified_door_5_potatos = "Vitrified Door 5 (PotatOS)"
 vitrified_door_6_potatos = "Vitrified Door 6 (PotatOS)"
+
+
+# Achievements - in map order for ease of development
+achievement_final_transmission = "Achievement - Final Transmission"     # Any map with a radio and ratman den
+achievement_drop_box = "Achievement - Drop Box"                         # Multiple maps
+achievement_preservation_of_mass = "Achievement - Preservation of Mass" # sp_a2_pit_flings
+achievement_overclocker = "Achievement - Overclocker"                   # sp_a2_ricochet
+achievement_pturretdactyl = "Achievement - Pturretdactyl"               # Multiple maps
+achievement_good_listener = "Achievement - Good Listener"               # sp_a2_bts1 - pre_solved_chamber-REENTER_TEST_CHAMBERS
+achievement_no_hard_feelings = "Achievement - No Hard Feelings"         # sp_a2_bts4
+achievement_scanned_alone = "Achievement - Scanned Alone"               # sp_a2_bts4
+achievement_door_prize = "Achievement - Door Prize"                     # sp_a3_03 and sp_a3_transition01 - Use current checks as count to avoid instance errors
+achievement_schrodingers_catch = "Achievement - Schrodinger's Catch"    # sp_a3_crazy_box
+achievement_ship_overboard = "Achievement - Ship Overboard"             # sp_a3_transition01 - boat_achievement
+achievement_portrait_of_a_lady = "Achievement - Portrait of a Lady"     # sp_a3_speed_ramp - portrait_achievement
+achievement_smash_tv = "Achievement - Smash TV"                         # multiple_maps - Use current checks as count to avoid instance errors
+achievement_you_made_your_point = "Achievement - You Made Your Point"   # sp_a4_intro - achievement_defiant - no button needed?
+achievement_pit_boss = "Achievement - Pit Boss"                         # sp_a4_finale1 - achievement_come_back_jump_in_pit
+
+# Story Achievements
+achievement_wake_up_call = "Achievement - Wake Up Call"
+achievement_you_monster = "Achievement - You Monster"
+achievement_undiscouraged = "Achievement - Undiscouraged"
+achievement_bridge_over_troubling_water = "Achievement - Bridge Over Troubling Water"
+achievement_sabotour = "Achievement - SaBOTour"
+achievement_stalemate_associate = "Achievement - Stalemate Associate"
+achievement_vertically_unchallenged = "Achievement - Vertically Unchallenged"
+achievement_tater_tote = "Achievement - Tater Tote"
+achievement_stranger_than_friction = "Achievement - Stranger Than Friction"
+achievement_white_out = "Achievement - White Out"
+achievement_dual_pit_experiment = "Achievement - Dual Pit Experiment"
+achievement_tunnel_of_funnel = "Achievement - Tunnel of Funnel"
+achievement_the_part_where_he_kills_you = "Achievement - The Part Where He Kills You"
+achievement_lunacy = "Achievement - Lunacy"
