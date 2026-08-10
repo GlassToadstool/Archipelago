@@ -133,7 +133,7 @@ story_achievements_table: dict[str, Portal2LocationData] = {
     achievement_bridge_over_troubling_water: Portal2LocationData("sp_a2_bridge_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, bridge, floor_button, button, weighted_cube]), # BRIDGE
     achievement_sabotour: Portal2LocationData("sp_a2_bts1", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, bridge, button]), # BREAK_OUT
     achievement_vertically_unchallenged: Portal2LocationData("sp_a3_bomb_flings", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, old_button, blue_gel]), # achievement_blue_gel_entity
-    achievement_tater_tote: Portal2Location("sp_a3_transition01", LocationType.STORY_ACHIEVEMENT, [portal_gun_2]), # potatos_achievement - same location but additional check?
+    achievement_tater_tote: Portal2LocationData("sp_a3_transition01", LocationType.STORY_ACHIEVEMENT, [portal_gun_2]), # potatos_achievement - same location but additional check?
     achievement_stranger_than_friction: Portal2LocationData("sp_a3_speed_flings", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, blue_gel, orange_gel, antique_cube, old_floor_button]), # achievement_orange_gel_entity
     achievement_white_out: Portal2LocationData("sp_a3_portal_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, blue_gel, orange_gel, white_gel]), # achievement_white_gel_entity
     achievement_dual_pit_experiment: Portal2LocationData("sp_a4_intro", LocationType.STORY_ACHIEVEMENT, [portal_gun_2, frankenturret, floor_button, button]), # logic_achievement_trivial_test
@@ -143,7 +143,23 @@ story_achievements_table: dict[str, Portal2LocationData] = {
 }
 
 # Not implementd
-achievements_table: dict[str, Portal2LocationData] = {}
+achievements_table: dict[str, Portal2LocationData] = {
+    achievement_final_transmission: Portal2LocationData(location_type=LocationType.ACHIEVEMENT), # Can be done on -
+    achievement_drop_box: Portal2LocationData(location_type=LocationType.ACHIEVEMENT), # Can be done on -
+    achievement_preservation_of_mass: Portal2LocationData("sp_a2_pit_flings", LocationType.ACHIEVEMENT),
+    achievement_overclocker: Portal2LocationData("sp_a2_ricochet", LocationType.ACHIEVEMENT),
+    achievement_pturretdactyl: Portal2LocationData(location_type=LocationType.ACHIEVEMENT),
+    achievement_good_listener: Portal2LocationData("sp_a2_bts1", LocationType.ACHIEVEMENT),
+    achievement_no_hard_feelings: Portal2LocationData("sp_a2_bts4", LocationType.ACHIEVEMENT),
+    achievement_scanned_alone: Portal2LocationData("sp_a2_bts4", LocationType.ACHIEVEMENT),
+    achievement_door_prize: Portal2LocationData(location_type=LocationType.ACHIEVEMENT), # Checked when all 6 door locations are found
+    achievement_schrodingers_catch: Portal2LocationData("sp_a3_crazy_box", LocationType.ACHIEVEMENT),
+    achievement_ship_overboard: Portal2LocationData("sp_a3_transition01", LocationType.ACHIEVEMENT),
+    achievement_portrait_of_a_lady: Portal2LocationData("sp_a3_speed_ramp", LocationType.ACHIEVEMENT),
+    achievement_smash_tv: Portal2LocationData(location_type=LocationType.ACHIEVEMENT), # Will be checked when at least 11 monitors are broken
+    achievement_you_made_your_point: Portal2LocationData("sp_a4_intro", LocationType.ACHIEVEMENT),
+    achievement_pit_boss: Portal2LocationData("sp_a4_finale1", LocationType.ACHIEVEMENT)
+}
 
 wheatley_monitor_table: dict[str, Portal2LocationData] = {
     wheatley_monitor_1_funnel_intro: Portal2LocationData("sp_a4_tb_intro", LocationType.WHEATLY_MONITOR, [portal_gun_2, funnel, frankenturret]),
