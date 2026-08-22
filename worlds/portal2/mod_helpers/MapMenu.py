@@ -140,7 +140,7 @@ class MapMenuElement(MenuElement):
             "sub_locations": self.sub_location_completion,
             "required_items": [item for item in self.required_items if item in self.parent.parent.client.item_list],
             "location_id": self.location_id,
-            "title": self.title[2:],
+            "title": self.title,
             "command": self.command,
             "total_locations": self.total_locations,
             "finished_locations": (1 if self.completed else 0) + len([name for name, complete in self.sub_location_completion.items() if complete])
